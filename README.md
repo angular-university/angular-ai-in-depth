@@ -1,14 +1,11 @@
 
-# TODO - adapt this README
+##  Angular AI In Depth (with Cursor and Claude Code) Course
 
-##  Angular AI In Depth (Signals Edition) Course
-
-This repository contains the code of the [ Angular AI In Depth (Signals Edition)](https://angular-university.io/course/angular-testing-in-depth) course.
+This repository contains the code of the [Angular AI In Depth (with Cursor and Claude Code)](https://angular-university.io/course/angular-ai-in-depth) course.
 
 This course repository is updated to Angular v21.
 
-![alt text](image.png)
-
+![Angular AI In Depth (with Cursor and Claude Code)](TODO)
 
 # Installation pre-requisites
 
@@ -18,18 +15,17 @@ Please install Node 22 Long Term Support Edition (LTE).
 
 With the following command the angular-cli will be installed globally in your machine:
 
-    npm install -g @angular/cli 
-
+    npm install -g @angular/cli
 
 # How To install this repository
 
 We can install the master branch using the following commands:
 
-    git clone https://github.com/angular-university/angular-testing-in-depth.git
+    git clone https://github.com/angular-university/angular-ai-in-depth.git
 
 After cloning, it's recommended that you install using npm ci. This way you will get the exact dependencies of package-lock.json:
 
-    cd angular-testing-in-depth
+    cd angular-ai-in-depth
     npm ci
 
     npm install 
