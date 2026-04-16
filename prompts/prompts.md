@@ -13,3 +13,6 @@ Use sign-in-page.png and sign-up-page.png and create those screens. Don't make a
 
 The two screens have very similar styles, refactor common parts into a common scss file.
 
+You can find the images you need in the public/images folder. The left image above "Angular AI In Depth" is 
+angular-ai-course-logo.png, while the Angular University logo used inside the right-side box is angular-university-logo.svg 
+
