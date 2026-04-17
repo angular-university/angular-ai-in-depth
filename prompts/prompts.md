@@ -37,10 +37,15 @@ Make the server port taken from an environment variable PORT otherwise use a def
 
 Add a command npm run server to start the server. 
 
+# Prompt 5 - add authentication route to the backend server
 
+Add an authentication /api/sign-in backend endpoint that takes in an email and password, and authenticates the user.
 
+Add some mock data for the user, with email test@angular-university.io and password angular. 
 
+Make the passwords hashed and salted according to the latest recommended standards. 
 
+Don't modify any frontend code, this is purely a backend task.
 
 
 

@@ -35,6 +35,14 @@ the OpenAI API.
 
 - there is no persistent database, just in-memory modifiable mock data based on a db-data.ts file
 
+- each Express route should be in a separate file under the /server/routes folder
+
+- make the backend secure according to the latest OWASP recommendations. 
+
+- load environment variables from an environment file .env using the dotenv package
+
+- use the package pino for logging. Added appropriate logging to all code.
+
 - don't use the OpenAI SDK Node wrapper to interact with their API. Instead, build plain HTTP requests directly. 
 
 - authentication is based on email and password only, hashed/salted passwords. The implementation should be fully functional and usable,

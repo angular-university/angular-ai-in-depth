@@ -24,6 +24,7 @@
   "private": true,
   "packageManager": "yarn@1.22.22",
   "dependencies": {
+    "argon2": "^0.41.0",
     "express": "^5.1.0",
     "@angular/common": "^21.0.0",
     "@angular/compiler": "^21.0.0",
