@@ -4,6 +4,7 @@ import pinoHttp from 'pino-http';
 import { logger } from './logger';
 import { root } from './routes/root';
 import { signIn } from './routes/sign-in';
+import { signUp } from './routes/sign-up';
 import { seedUsers } from './utils/seed-users';
 
 const PORT = process.env['PORT'] ?? 9000;
@@ -16,6 +17,7 @@ app.use(pinoHttp({ logger }));
 app.get('/', root);
 
 app.post('/api/sign-in', signIn);
+app.post('/api/sign-up', signUp);
 
 async function startServer() {
   await seedUsers();

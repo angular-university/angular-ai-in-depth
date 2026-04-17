@@ -47,6 +47,9 @@ Make the passwords hashed and salted according to the latest recommended standar
 
 Don't modify any frontend code, this is purely a backend task.
 
+# Prompt 6 - add user creation route to the backend server
+
+Add an authentication backend user creation endpoint mapped to url /api/sign-up that takes in an email and password, creates a new user and adds to the in-memory data store.
 
 
 
