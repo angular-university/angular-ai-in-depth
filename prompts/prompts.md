@@ -24,7 +24,26 @@ angular-ai-course-logo.png, while the Angular University logo used inside the ri
 
 Use the Inter font everywhere. 
 
-## Prompt 3 - correct layout, make it responsive 
+## Prompt 3 - correct UI layout, make it responsive 
 
 Make all screens responsive in the sense that they centered in  
 the middle in a desktop view. make the responsive styles reusable where applicable. 
+
+## Prompt 4 - create a node backend skeleton 
+
+Inside a /server folder, create an express server with a single root route / that just prints out a very basic server running confirmation HTML page.
+
+Make the server port taken from an environment variable PORT otherwise use a default port 9000 for development. 
+
+Add a command npm run server to start the server. 
+
+
+
+
+
+
+
+
+
+
+
