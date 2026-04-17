@@ -12,56 +12,59 @@
 
   <div class="auth-panel">
     <div class="auth-card">
+      <div class="card-body">
 
-      <div class="card-logo">
-        <img ngSrc="/images/angular-university-logo.svg"
-             class="card-logo-img"
-             alt="Angular University"
-             width="136"
-             height="135">
+        <div class="card-logo">
+          <img ngSrc="/images/angular-university-logo.svg"
+               class="card-logo-img"
+               alt="Angular University"
+               width="136"
+               height="135">
+        </div>
+
+        <h1 class="auth-title">Welcome back,</h1>
+
+        <form (submit)="onSubmit($event)" class="auth-form" novalidate>
+
+          <div>
+            <label for="email" class="form-label">Email</label>
+            <input id="email"
+                   class="form-input"
+                   type="email"
+                   [formField]="f.email"
+                   placeholder="Email"
+                   autocomplete="email">
+            @if (f.email().touched() && f.email().invalid()) {
+              <ul class="field-errors" role="alert" aria-live="polite">
+                @for (error of f.email().errors(); track error) {
+                  <li>{{ error.message }}</li>
+                }
+              </ul>
+            }
+          </div>
+
+          <div>
+            <label for="password" class="form-label">Password</label>
+            <input id="password"
+                   class="form-input"
+                   type="password"
+                   [formField]="f.password"
+                   placeholder="Password"
+                   autocomplete="current-password">
+            @if (f.password().touched() && f.password().invalid()) {
+              <ul class="field-errors" role="alert" aria-live="polite">
+                @for (error of f.password().errors(); track error) {
+                  <li>{{ error.message }}</li>
+                }
+              </ul>
+            }
+          </div>
+
+          <button type="submit" class="auth-submit-btn">Login</button>
+
+        </form>
+
       </div>
-
-      <h1 class="auth-title">Welcome back,</h1>
-
-      <form (submit)="onSubmit($event)" class="auth-form" novalidate>
-
-        <div>
-          <label for="email" class="form-label">Email</label>
-          <input id="email"
-                 class="form-input"
-                 type="email"
-                 [formField]="f.email"
-                 placeholder="Email"
-                 autocomplete="email">
-          @if (f.email().touched() && f.email().invalid()) {
-            <ul class="field-errors" role="alert" aria-live="polite">
-              @for (error of f.email().errors(); track error) {
-                <li>{{ error.message }}</li>
-              }
-            </ul>
-          }
-        </div>
-
-        <div>
-          <label for="password" class="form-label">Password</label>
-          <input id="password"
-                 class="form-input"
-                 type="password"
-                 [formField]="f.password"
-                 placeholder="Password"
-                 autocomplete="current-password">
-          @if (f.password().touched() && f.password().invalid()) {
-            <ul class="field-errors" role="alert" aria-live="polite">
-              @for (error of f.password().errors(); track error) {
-                <li>{{ error.message }}</li>
-              }
-            </ul>
-          }
-        </div>
-
-        <button type="submit" class="auth-submit-btn">Login</button>
-
-      </form>
 
       <p class="auth-footer">
         Don't have an account? <a routerLink="/sign-up">Sign up here</a>

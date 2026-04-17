@@ -2,19 +2,14 @@
 
 :host {
   display: block;
-  min-height: 100vh;
 }
 
 // ─── Page layout ─────────────────────────────────────────────────────────────
 
 .auth-page {
   display: flex;
-  min-height: 100vh;
-  background-color: #0a0520;
-  background-image:
-    radial-gradient(ellipse at 15% 45%, rgba(109, 40, 217, 0.35) 0%, transparent 50%),
-    radial-gradient(ellipse at 70% 20%, rgba(37, 99, 235, 0.18) 0%, transparent 45%),
-    radial-gradient(ellipse at 85% 75%, rgba(109, 40, 217, 0.18) 0%, transparent 40%);
+  height: 100vh;          // exact viewport height so flex children can stretch & center
+  background-color: #2d1b69;
 }
 
 // ─── Left hero ───────────────────────────────────────────────────────────────
@@ -31,12 +26,16 @@
 
 .hero-logo-container {
   position: relative;
-  width: 280px;
-  height: 186px;
+  width: 380px;
+  height: 253px;          // maintains the logo's natural aspect ratio
+
+  img {
+    object-fit: contain;  // prevents stretching inside the fill container
+  }
 }
 
 .hero-title {
-  color: rgba(255, 255, 255, 0.88);
+  color: rgba(255, 255, 255, 0.9);
   font-size: 1.5rem;
   font-weight: 400;
   text-align: center;
@@ -47,8 +46,8 @@
 // ─── Right panel ─────────────────────────────────────────────────────────────
 
 .auth-panel {
-  width: 420px;
-  min-width: 420px;
+  width: 460px;
+  min-width: 460px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -59,28 +58,31 @@
 
 .auth-card {
   width: 100%;
-  background: #ffffff;
+  background: #160930;
   border-radius: 16px;
-  padding: 2.5rem 2rem;
-  box-shadow: 0 32px 64px rgba(0, 0, 0, 0.5);
+  overflow: hidden;       // clips the footer divider cleanly
+  box-shadow: 0 24px 48px rgba(0, 0, 0, 0.45);
+}
+
+.card-body {
+  padding: 2.5rem 2rem 2rem;
 }
 
 .card-logo {
   display: flex;
   justify-content: center;
-  margin-bottom: 1.5rem;
+  margin-bottom: 1.25rem;
 }
 
 .card-logo-img {
-  height: 68px;
+  height: 100px;
   width: auto;
-  border-radius: 8px;
 }
 
 .auth-title {
   font-size: 1.375rem;
   font-weight: 600;
-  color: #111827;
+  color: #ffffff;
   text-align: center;
   margin: 0 0 1.625rem;
 }
@@ -110,8 +112,8 @@
   display: block;
   width: 100%;
   padding: 0.8125rem 1rem;
-  background: #1e1b3a;
-  border: 1.5px solid #3730a3;
+  background: #241548;
+  border: 1.5px solid rgba(255, 255, 255, 0.08);
   border-radius: 8px;
   color: rgba(255, 255, 255, 0.88);
   font-size: 0.9375rem;
@@ -121,12 +123,18 @@
   transition: border-color 0.15s ease, box-shadow 0.15s ease;
 
   &::placeholder {
-    color: rgba(255, 255, 255, 0.38);
+    color: rgba(255, 255, 255, 0.35);
   }
 
   &:focus {
-    border-color: #6366f1;
-    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.22);
+    border-color: rgba(99, 102, 241, 0.7);
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.18);
+  }
+
+  // suppress browser native :invalid red styling (Signal Forms handles validation state)
+  &:invalid {
+    box-shadow: none;
+    border-color: rgba(255, 255, 255, 0.08);
   }
 }
 
@@ -134,7 +142,7 @@
   display: block;
   width: 100%;
   padding: 0.875rem;
-  background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
+  background: #5c6ef5;
   color: #ffffff;
   border: none;
   border-radius: 8px;
@@ -154,7 +162,7 @@
   }
 
   &:focus-visible {
-    outline: 3px solid rgba(99, 102, 241, 0.55);
+    outline: 3px solid rgba(92, 110, 245, 0.55);
     outline-offset: 2px;
   }
 }
@@ -179,12 +187,13 @@
 
 .auth-footer {
   text-align: center;
-  margin-top: 1.25rem;
+  padding: 1.25rem 2rem;
   font-size: 0.875rem;
-  color: #6b7280;
+  color: rgba(255, 255, 255, 0.45);
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
 
   a {
-    color: #6366f1;
+    color: #818cf8;
     text-decoration: none;
     font-weight: 500;
 
@@ -193,7 +202,7 @@
     }
 
     &:focus-visible {
-      outline: 2px solid #6366f1;
+      outline: 2px solid #818cf8;
       border-radius: 2px;
       outline-offset: 1px;
     }
@@ -205,6 +214,8 @@
 @media (max-width: 800px) {
   .auth-page {
     flex-direction: column;
+    height: auto;
+    min-height: 100vh;
   }
 
   .auth-hero {
@@ -212,8 +223,8 @@
   }
 
   .hero-logo-container {
-    width: 200px;
-    height: 133px;
+    width: 240px;
+    height: 160px;
   }
 
   .auth-panel {

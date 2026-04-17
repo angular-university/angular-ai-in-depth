@@ -9,10 +9,11 @@ Claude doesn't know about them due to .claudeignore. So you have to paste them i
 
 Based on the UI Figma screenshots available in the /ui-screenshots folder, generate the frontend Angular part of just the sign in and sign up screens.
 
-Use sign-in-page.png and sign-up-page.png and create those screens. Don't make any API or service calls, focus on creating the Angular components with the correct HTML and CSS. 
+Use sign-in-screen.png and sign-up-screen.png and create those screens. Don't make any API or service calls, focus on creating the Angular components with the correct HTML and CSS. 
 
 The two screens have very similar styles, refactor common parts into a common scss file.
 
 You can find the images you need in the public/images folder. The left image above "Angular AI In Depth" is 
 angular-ai-course-logo.png, while the Angular University logo used inside the right-side box is angular-university-logo.svg 
 
+Use the Inter font everywhere.
