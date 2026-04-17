@@ -5,7 +5,7 @@ These are the prompts that you will be needing throughout the course.
 
 Claude doesn't know about them due to .claudeignore. So you have to paste them in the Claude prompt. 
 
-## Create login screens and empty home page 
+## Prompt 1 - Create login screens and empty home page 
 
 Based on the UI Figma screenshots available in the /ui-screenshots folder, generate the frontend Angular part of just the sign in and sign up screens.
 
@@ -17,3 +17,7 @@ You can find the images you need in the public/images folder. The left image abo
 angular-ai-course-logo.png, while the Angular University logo used inside the right-side box is angular-university-logo.svg 
 
 Use the Inter font everywhere.
+
+make all screens  responsive in the sense that they centered in  
+the middle in a desktop view. make the responsive styles         
+reusable where applicable. 
