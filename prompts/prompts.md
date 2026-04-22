@@ -95,7 +95,12 @@ Add a createUser method to AuthService, and call it in the sign-up screen. If th
 
 The backend service /api/sign-in should return a signed JWT in its response containing the JSON payload, instead of just returning the plain payload itself.  
 
-use HS256 JWTs, assume the  key is on the .env file. Add a sample  key to .env and .env.example.
+use HS256 JWTs, assume the key is on the .env file. Add a sample  key to .env and .env.example.
+
+# Prompt 15 - Make create user route JWT based  
+
+Make the /api/sign-in route also JWT-based.
+
 
 # Prompt 14 - add authentication guard
 
