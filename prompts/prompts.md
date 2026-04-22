@@ -125,7 +125,7 @@ create an HTTP interceptor that takes the JWT from local storage and append it i
 
 # Prompt 16 - add confirm password form error
 
-on the sign up screen, show and error message and disable the form if the password cannot be confirmed. 
+on the sign up screen, show and error message and disable the form if the passwords don't match. use a form validator. put it in an external file. 
 
 
 
