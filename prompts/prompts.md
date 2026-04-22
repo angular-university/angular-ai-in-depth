@@ -119,7 +119,9 @@ Create an authentication guard that redirects the user to the sign in screen if 
 
 use the UserProfile service to know if the user is logged in or not. apply the guard to the home screen only. 
 
+# Prompt 15 - Authentication HTTP interceptor
 
+create an HTTP interceptor that takes the JWT from local storage and append it in a header to every request sent to the server. 
 
 
 
