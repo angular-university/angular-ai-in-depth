@@ -3,7 +3,7 @@ import { Router, NavigationStart, NavigationEnd, NavigationCancel, NavigationErr
 import { LoadingIndicator } from '../loading-indicator/loading-indicator';
 
 @Component({
-  selector: 'router-loading-indicator',
+  selector: 'global-loading-indicator',
   imports: [LoadingIndicator],
   template: `
     @if (loading()) {
@@ -24,7 +24,7 @@ import { LoadingIndicator } from '../loading-indicator/loading-indicator';
     }
   `]
 })
-export class RouterLoadingIndicator {
+export class GlobalLoadingIndicator {
   private readonly router = inject(Router);
 
   protected readonly loading = signal(false);
