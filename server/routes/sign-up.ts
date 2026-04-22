@@ -28,5 +28,5 @@ export async function signUp(req: Request, res: Response) {
   const token = signJwt({ sub: user.id, email: user.email });
 
   logger.info({ email, userId: user.id }, 'User created');
-  res.status(201).json({ token });
+  res.status(201).json({ token, user: { id: user.id, email: user.email } });
 }

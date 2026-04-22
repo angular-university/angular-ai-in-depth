@@ -28,5 +28,5 @@ export async function signIn(req: Request, res: Response) {
   const token = signJwt({ sub: user!.id, email: user!.email });
 
   logger.info({ email, userId: user!.id }, 'User signed in');
-  res.json({ token });
+  res.json({ token, user: { id: user!.id, email: user!.email } });
 }
