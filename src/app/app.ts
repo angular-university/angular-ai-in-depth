@@ -7,14 +7,7 @@ import { UserMessageService } from './shared/components/user-message/user-messag
 @Component({
   selector: 'root',
   imports: [RouterOutlet, RouterLoadingIndicator, UserMessage],
-  template: `
-    <user-message
-      [message]="userMessageService.message()"
-      [type]="userMessageService.type()"
-      (closed)="userMessageService.clear()" />
-    <router-loading-indicator />
-    <router-outlet />
-  `
+  templateUrl: './app.html'
 })
 export class App {
   protected readonly userMessageService = inject(UserMessageService);

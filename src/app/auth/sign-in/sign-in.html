@@ -23,7 +23,7 @@
                  height="135">
           </div>
 
-          <h1 class="auth-title">Welcome back,</h1>
+          <h1 class="auth-title">Welcome back</h1>
 
           <form (submit)="onSubmit($event)" class="auth-form" novalidate>
 
@@ -32,12 +32,12 @@
               <input id="email"
                      class="form-input"
                      type="email"
-                     [formField]="f.email"
+                     [formField]="form.email"
                      placeholder="Email"
                      autocomplete="email">
-              @if (f.email().touched() && f.email().invalid()) {
+              @if (form.email().touched() && form.email().invalid()) {
                 <ul class="field-errors" role="alert" aria-live="polite">
-                  @for (error of f.email().errors(); track error) {
+                  @for (error of form.email().errors(); track error) {
                     <li>{{ error.message }}</li>
                   }
                 </ul>
@@ -49,12 +49,12 @@
               <input id="password"
                      class="form-input"
                      type="password"
-                     [formField]="f.password"
+                     [formField]="form.password"
                      placeholder="Password"
                      autocomplete="current-password">
-              @if (f.password().touched() && f.password().invalid()) {
+              @if (form.password().touched() && form.password().invalid()) {
                 <ul class="field-errors" role="alert" aria-live="polite">
-                  @for (error of f.password().errors(); track error) {
+                  @for (error of form.password().errors(); track error) {
                     <li>{{ error.message }}</li>
                   }
                 </ul>

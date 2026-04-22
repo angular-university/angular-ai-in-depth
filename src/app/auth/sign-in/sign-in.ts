@@ -26,7 +26,7 @@ export class SignIn {
   protected readonly model = signal<SignInData>({ email: '', password: '' });
   protected readonly loading = signal(false);
 
-  protected readonly formGroup = form(this.model, (p) => {
+  protected readonly form = form(this.model, (p) => {
     required(p.email, { message: 'Email is required' });
     email(p.email, { message: 'Enter a valid email address' });
     required(p.password, { message: 'Password is required' });

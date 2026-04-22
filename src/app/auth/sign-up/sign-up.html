@@ -32,12 +32,12 @@
               <input id="email"
                      class="form-input"
                      type="email"
-                     [formField]="f.email"
+                     [formField]="form.email"
                      placeholder="Email"
                      autocomplete="email">
-              @if (f.email().touched() && f.email().invalid()) {
+              @if (form.email().touched() && form.email().invalid()) {
                 <ul class="field-errors" role="alert" aria-live="polite">
-                  @for (error of f.email().errors(); track error) {
+                  @for (error of form.email().errors(); track error) {
                     <li>{{ error.message }}</li>
                   }
                 </ul>
@@ -49,12 +49,12 @@
               <input id="password"
                      class="form-input"
                      type="password"
-                     [formField]="f.password"
+                     [formField]="form.password"
                      placeholder="Password"
                      autocomplete="new-password">
-              @if (f.password().touched() && f.password().invalid()) {
+              @if (form.password().touched() && form.password().invalid()) {
                 <ul class="field-errors" role="alert" aria-live="polite">
-                  @for (error of f.password().errors(); track error) {
+                  @for (error of form.password().errors(); track error) {
                     <li>{{ error.message }}</li>
                   }
                 </ul>
@@ -66,12 +66,12 @@
               <input id="confirmPassword"
                      class="form-input"
                      type="password"
-                     [formField]="f.confirmPassword"
+                     [formField]="form.confirmPassword"
                      placeholder="Confirm Password"
                      autocomplete="new-password">
-              @if (f.confirmPassword().touched() && f.confirmPassword().invalid()) {
+              @if (form.confirmPassword().touched() && form.confirmPassword().invalid()) {
                 <ul class="field-errors" role="alert" aria-live="polite">
-                  @for (error of f.confirmPassword().errors(); track error) {
+                  @for (error of form.confirmPassword().errors(); track error) {
                     <li>{{ error.message }}</li>
                   }
                 </ul>
