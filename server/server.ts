@@ -6,6 +6,7 @@ import { root } from './routes/root';
 import { signIn } from './routes/sign-in';
 import { signUp } from './routes/sign-up';
 import { startConversation } from './routes/start-conversation';
+import { continueConversation } from './routes/continue-conversation';
 import { requireAuth } from './middleware/auth.middleware';
 import { seedUsers } from './utils/seed-users';
 
@@ -21,6 +22,7 @@ app.get('/', root);
 app.post('/api/sign-in', signIn);
 app.post('/api/sign-up', signUp);
 app.post('/api/start-conversation', requireAuth, startConversation);
+app.post('/api/continue-conversation', requireAuth, continueConversation);
 
 async function startServer() {
   await seedUsers();

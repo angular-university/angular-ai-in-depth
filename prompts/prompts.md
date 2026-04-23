@@ -170,3 +170,11 @@ refactor the logic to get a completion based on a conversation into a separate r
 # create an authentication middleware 
 
 create a middleware that ensure the request contains a valid JWT. Apply the middleware to the start-conversation route only.
+
+# create continue conversation endpoint
+
+Create a /api/continue-conversation backend endpoint. apply auth middleware. takes in the request body the conversation Id and the next user message.
+
+Retrieves the conversation from the in-memory DB, appends the new user message and gets a new AI reply. 
+
+Saves the conversation in in-memory db, and returns the last ai response. 
