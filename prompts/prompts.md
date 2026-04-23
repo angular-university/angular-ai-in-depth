@@ -166,3 +166,7 @@ Don't mention OpenAI in the response names, etc. we might change it to another A
 # refactor 
 
 refactor the logic to get a completion based on a conversation into a separate reusable async function  
+
+# create an authentication middleware 
+
+create a middleware that ensure the request contains a valid JWT. Apply the middleware to the start-conversation route only.
