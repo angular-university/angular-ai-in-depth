@@ -146,3 +146,23 @@ the collapsible side menu should be a separate component. the chat history, the 
 # implement logout
 
 add a logout method to the authentication service. implement the logout button, redirect to login page and clear profile and token from local storage.
+
+# start conversation backend endpoint
+
+Implement a /api/start-conversation route in the backend. This endpoint should a prompt Id from the request body, and use it to retrieve an initial system prompt from a prompts.ts file.
+
+The goal is that the system prompt cannot be manipulated by the frontend user. The system prompt should limit the AI to answer Angular questions, and nothing more.
+
+Then create an Open AI API conversation with the system prompt followed by the user initial message, taken from the request body. Save the conversation in an in-memory store in conversations-db.ts and create a conversation Id.
+
+send the conversation to open AI using the Open AI API, and grab a response from Open AI. send only the AI response back to the user in the response body, together with the conversation Id.
+
+When calling the OpenAI API, just do a plain HTTP request using a promise-based HTTP client and async await. Don't use any open AI third party node package wrapper.
+
+Don't worry about authentication for now.
+
+Don't mention OpenAI in the response names, etc. we might change it to another AI provider in the future.
+
+# refactor 
+
+refactor the logic to get a completion based on a conversation into a separate reusable async function  

@@ -1,9 +1,9 @@
-export interface UserProfile {
+export type UserProfile = {
   id: string;
   email: string;
-}
+};
 
-export interface AuthResponse {
+export type AuthResponse = {
   token: string;
   user: UserProfile;
-}
+};

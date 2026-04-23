@@ -30,6 +30,8 @@ the OpenAI API.
 
 - don't use Promise return types in async functions, those are inferred.
 
+- for custom object types, use type instead of interface.
+
 ## Angular code rules
 
 - always use Signal Forms. Don't use reactive or model-driven forms.

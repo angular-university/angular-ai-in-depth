@@ -8,12 +8,7 @@ import { AuthService } from '../auth.service';
 import { UserProfileService } from '../user-profile.service';
 import { LoadingIndicator } from '../../shared/components/loading-indicator/loading-indicator';
 import { UserMessageService } from '../../shared/components/user-message/user-message.service';
-
-interface SignUpData {
-  email: string;
-  password: string;
-  confirmPassword: string;
-}
+import { SignUpData } from './sign-up.model';
 
 @Component({
   selector: 'sign-up',

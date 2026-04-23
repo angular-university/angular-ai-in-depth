@@ -9,3 +9,7 @@ if (!secret) {
 export function signJwt(payload: object): string {
   return jwt.sign(payload, secret, { algorithm: 'HS256', expiresIn: '7d' });
 }
+
+export function verifyJwt(token: string): jwt.JwtPayload {
+  return jwt.verify(token, secret) as jwt.JwtPayload;
+}

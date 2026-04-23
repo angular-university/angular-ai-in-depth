@@ -7,11 +7,7 @@ import { AuthService } from '../auth.service';
 import { UserProfileService } from '../user-profile.service';
 import { LoadingIndicator } from '../../shared/components/loading-indicator/loading-indicator';
 import { UserMessageService } from '../../shared/components/user-message/user-message.service';
-
-interface SignInData {
-  email: string;
-  password: string;
-}
+import { SignInData } from './sign-in.model';
 
 @Component({
   selector: 'sign-in',
