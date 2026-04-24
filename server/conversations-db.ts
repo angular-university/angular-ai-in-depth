@@ -1,3 +1,6 @@
+
+import { mockConversations } from './mock-data';
+
 export type AiMessage = {
   role: 'system' | 'user' | 'assistant';
   content: string;
@@ -11,3 +14,8 @@ export type StoredConversation = {
 };
 
 export const conversationsDb = new Map<string, StoredConversation>();
+
+
+for (const conversation of mockConversations) {
+  conversationsDb.set(conversation.id, conversation);
+}
