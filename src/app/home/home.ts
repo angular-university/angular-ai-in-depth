@@ -5,6 +5,7 @@ import { ChatConversation } from './conversation/conversation';
 import { ChatMessage, Conversation } from './chat.model';
 import { ConversationSummary } from './chat-history.model';
 import { ChatHistoryService } from './chat-history.service';
+import { ChatService } from './chat.service';
 import { AuthService } from '../auth/auth.service';
 
 @Component({
@@ -16,10 +17,12 @@ import { AuthService } from '../auth/auth.service';
 export class Home implements OnInit {
   private readonly authService = inject(AuthService);
   private readonly chatHistoryService = inject(ChatHistoryService);
+  private readonly chatService = inject(ChatService);
 
   sidebarCollapsed = signal(true);
   conversationSummaries = signal<ConversationSummary[]>([]);
   activeConversation = signal<Conversation | null>(null);
+  isLoading = signal(false);
 
   async ngOnInit() {
     try {
@@ -51,8 +54,10 @@ export class Home implements OnInit {
     await this.authService.logout();
   }
 
-  onMessageSent(content: string) {
-    const newMessage: ChatMessage = {
+  async onMessageSent(content: string) {
+    if (this.isLoading()) return;
+
+    const userMessage: ChatMessage = {
       id: crypto.randomUUID(),
       role: 'user',
       content,
@@ -60,26 +65,62 @@ export class Home implements OnInit {
     };
 
     const current = this.activeConversation();
+
     if (current) {
-      this.activeConversation.set({
-        ...current,
-        messages: [...current.messages, newMessage],
-      });
+      this.activeConversation.set({ ...current, messages: [...current.messages, userMessage] });
+      this.isLoading.set(true);
+      try {
+        const response = await this.chatService.continueConversation(current.id, content);
+        const assistantMessage: ChatMessage = {
+          id: crypto.randomUUID(),
+          role: 'assistant',
+          content: response.message,
+          timestamp: new Date(),
+        };
+        this.activeConversation.update(conv =>
+          conv ? { ...conv, messages: [...conv.messages, assistantMessage] } : null
+        );
+      } catch {
+        // User message remains visible; user can retry
+      } finally {
+        this.isLoading.set(false);
+      }
     } else {
-      const newConversation: Conversation = {
-        id: crypto.randomUUID(),
-        title: content.length > 50 ? content.slice(0, 47) + '...' : content,
+      const tempId = crypto.randomUUID();
+      const tempConversation: Conversation = {
+        id: tempId,
+        title: content.length > 60 ? content.slice(0, 60) : content,
         createdAt: new Date(),
-        messages: [newMessage],
+        messages: [userMessage],
       };
-      const summary: ConversationSummary = {
-        id: newConversation.id,
-        title: newConversation.title,
-        createdAt: newConversation.createdAt,
-      };
-      this.conversationSummaries.update(summaries => [summary, ...summaries]);
-      this.activeConversation.set(newConversation);
-      this.sidebarCollapsed.set(false);
+      this.activeConversation.set(tempConversation);
+      this.isLoading.set(true);
+      try {
+        const response = await this.chatService.startConversation('angular-assistant', content);
+        const assistantMessage: ChatMessage = {
+          id: crypto.randomUUID(),
+          role: 'assistant',
+          content: response.message,
+          timestamp: new Date(),
+        };
+        const newConversation: Conversation = {
+          ...tempConversation,
+          id: response.conversationId,
+          messages: [...tempConversation.messages, assistantMessage],
+        };
+        const summary: ConversationSummary = {
+          id: newConversation.id,
+          title: newConversation.title,
+          createdAt: newConversation.createdAt,
+        };
+        this.conversationSummaries.update(summaries => [summary, ...summaries]);
+        this.activeConversation.set(newConversation);
+        this.sidebarCollapsed.set(false);
+      } catch {
+        this.activeConversation.set(null);
+      } finally {
+        this.isLoading.set(false);
+      }
     }
   }
 }

@@ -10,6 +10,7 @@ import { Conversation } from '../chat.model';
 })
 export class ChatConversation {
   conversation = input.required<Conversation>();
+  isLoading = input(false);
   messageSent = output<string>();
 
   inputValue = signal('');
@@ -27,7 +28,7 @@ export class ChatConversation {
 
   send() {
     const content = this.inputValue().trim();
-    if (!content) return;
+    if (!content || this.isLoading()) return;
     this.messageSent.emit(content);
     this.inputValue.set('');
   }

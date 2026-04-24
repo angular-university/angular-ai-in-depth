@@ -200,7 +200,7 @@ create a /api/get-conversation endpoint to retrieve a single conversation based 
 
 it should return a single conversation, with all it's messages. 
 
-# add loging
+# add logging
 
 Add appropriate logging to all endpoints and middleware.
 
@@ -212,5 +212,10 @@ the history chat list on the side menu should be retrieved via getAllConversatio
 
 when clicking on a conversation on the list, the conversation should be returned by id from the getConversationById() method.
 
+# start and continue a conversation 
+
+when starting a new conversation in the frontend, call the backend start-conversation endpoint, and show the local loading indicator while waiting for a reply.
+
+display the AI response. when continuing the conversation, call the continue conversation endpoint. 
 
 

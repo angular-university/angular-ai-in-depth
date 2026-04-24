@@ -16,6 +16,7 @@
     } @else {
       <chat-conversation
         [conversation]="activeConversation()!"
+        [isLoading]="isLoading()"
         (messageSent)="onMessageSent($event)" />
     }
   </main>

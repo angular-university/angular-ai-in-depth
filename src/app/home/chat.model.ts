@@ -11,3 +11,12 @@ export type Conversation = {
   messages: ChatMessage[];
   createdAt: Date;
 };
+
+export type StartConversationResponse = {
+  conversationId: string;
+  message: string;
+};
+
+export type ContinueConversationResponse = {
+  message: string;
+};
