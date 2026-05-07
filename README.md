@@ -59,7 +59,9 @@ This repository has multiple branches, have a look at the beginning of each sect
 
 It's also possible to download a ZIP file for a given branch,  using the branch dropdown on this page on the top left, and then selecting the Clone or Download / Download as ZIP button.
 
-# Other Courses
+# Angular University Courses
+
+Here is a list of all the courses of the Angular University.
 
 ## Angular For Beginners
 
