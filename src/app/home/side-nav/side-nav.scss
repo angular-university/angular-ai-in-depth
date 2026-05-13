@@ -1,13 +1,16 @@
+:host {
+  display: flex;
+  flex-shrink: 0;
+}
+
 .side-nav {
   display: flex;
   flex-direction: column;
   width: var(--sidebar-width-expanded);
-  height: 100%;
   background: var(--color-bg-sidebar);
   border-right: 1px solid var(--color-border);
   transition: width var(--transition-sidebar);
   overflow: hidden;
-  flex-shrink: 0;
 
   &.collapsed {
     width: var(--sidebar-width-collapsed);

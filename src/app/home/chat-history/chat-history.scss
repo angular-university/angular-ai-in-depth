@@ -1,3 +1,10 @@
+:host {
+  display: flex;
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+}
+
 .chat-history {
   flex: 1;
   overflow-y: auto;
@@ -19,13 +26,11 @@
 }
 
 .section-label {
-  font-size: 12px;
-  font-weight: 600;
+  font-size: 13px;
+  font-weight: 700;
   color: var(--color-text-primary);
   padding: 8px 12px 6px;
   margin: 0;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
 }
 
 .conversation-list {
