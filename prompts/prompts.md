@@ -51,3 +51,10 @@ signal-based versions. Remember this for the future.
 
 start the frontend with npm start on 4200, and take screenshots of the chat home page with
 pupeteer and iterate on it until it matches closely the design. fix the layout issues.
+
+# fix layout issues again 
+
+start the server and use pupeteer again, but this
+time open the collapsed panel and click on a
+conversation. Notice that the messages are not properly centered. Maybe a max-width is needed for
+the messages container. Iterate using pupetter  until it's fixed.
