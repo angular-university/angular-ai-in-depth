@@ -1,0 +1,23 @@
+:root {
+  --color-bg-primary: #150d2e;
+  --color-bg-sidebar: #1a1035;
+  --color-bg-message-user: #3d1f6a;
+  --color-bg-message-ai: #1c1537;
+  --color-bg-input: #251a45;
+  --color-bg-hover: rgba(255, 255, 255, 0.06);
+  --color-accent: #e91e8c;
+  --color-accent-hover: #c91678;
+  --color-text-primary: #e0d5f0;
+  --color-text-muted: #8a7aaa;
+  --color-text-sidebar: #b0a0cc;
+  --color-border: rgba(150, 80, 200, 0.25);
+  --color-border-input: rgba(233, 30, 140, 0.65);
+  --color-user-bubble-border: rgba(150, 80, 200, 0.4);
+  --sidebar-width-collapsed: 56px;
+  --sidebar-width-expanded: 260px;
+  --transition-sidebar: 0.3s ease;
+  --radius-lg: 16px;
+  --radius-md: 12px;
+  --radius-sm: 8px;
+  --radius-pill: 999px;
+}

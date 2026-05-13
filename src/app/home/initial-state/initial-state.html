@@ -1,0 +1,32 @@
+<div class="initial-state">
+  <div class="hero">
+    <img src="images/angular-ai-course-logo.png" alt="Angular AI In Depth" class="logo" />
+    <h1 class="title">Angular <span class="accent">AI</span> In Depth</h1>
+  </div>
+
+  <div class="input-wrapper">
+    <div class="input-bar">
+      <span class="search-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="11" cy="11" r="8" />
+          <path d="M21 21l-4.35-4.35" />
+        </svg>
+      </span>
+      <input
+        type="text"
+        class="message-input"
+        placeholder="Ask anything..."
+        [value]="messageText()"
+        (input)="updateMessage($event)"
+        (keydown)="handleKeyDown($event)"
+        autocomplete="off"
+      />
+      <button class="send-btn" (click)="submit()" aria-label="Send message">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+          <line x1="12" y1="19" x2="12" y2="5" />
+          <polyline points="5,12 12,5 19,12" />
+        </svg>
+      </button>
+    </div>
+  </div>
+</div>

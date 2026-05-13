@@ -30,3 +30,21 @@ the collapsible side menu should be a separate component. the chat history, the 
 
 Extract CSS theme variables like background colors to a separate theme file that can easily reused across components.
 
+# split models into separate files
+
+@src/app/home/home.model.ts split these
+models into separate files. Always put models
+in separate files in the future.
+
+# fix component prefixes
+
+remove the app- prefix from all component selectors, and don't add any prefix in the
+future
+
+# avoid view query decorators 
+
+@src/app/home/conversation-thread/ replace the use of the decorator @ViewChild by it's signal-based 
+alternative viewChild. In general, avoid decorators for view queries and prefer the
+signal-based versions. Remember this for the future.
+
+

@@ -1,0 +1,22 @@
+<div class="layout">
+  <side-nav
+    [collapsed]="collapsed()"
+    [conversations]="conversations()"
+    [activeConversationId]="activeConversationId()"
+    (toggle)="toggleSidebar()"
+    (conversationSelected)="selectConversation($event)"
+    (newChat)="newChat()"
+    (logout)="logout()"
+  />
+  <main class="main-content">
+    @if (activeConversation(); as conversation) {
+      <conversation-thread
+        [conversation]="conversation"
+        [isLoading]="isLoading()"
+        (messageSent)="sendMessage($event)"
+      />
+    } @else {
+      <initial-state (messageSent)="sendMessage($event)" />
+    }
+  </main>
+</div>

@@ -1,0 +1,16 @@
+<div class="chat-history">
+  <p class="section-label">Recent</p>
+  <ul class="conversation-list">
+    @for (conversation of conversations(); track conversation.id) {
+      <li>
+        <button
+          class="conversation-item"
+          [class.active]="conversation.id === activeConversationId()"
+          (click)="conversationSelected.emit(conversation.id)"
+        >
+          {{ conversation.title }}
+        </button>
+      </li>
+    }
+  </ul>
+</div>

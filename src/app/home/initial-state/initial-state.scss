@@ -1,0 +1,113 @@
+.initial-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  gap: 40px;
+  padding: 24px;
+}
+
+.hero {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+.logo {
+  width: 220px;
+  height: auto;
+  object-fit: contain;
+}
+
+.title {
+  font-size: 28px;
+  font-weight: 400;
+  color: var(--color-text-muted);
+  margin: 0;
+  letter-spacing: 0.5px;
+}
+
+.accent {
+  color: var(--color-accent);
+}
+
+.input-wrapper {
+  width: 100%;
+  max-width: 680px;
+}
+
+.input-bar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--color-bg-input);
+  border: 1.5px solid var(--color-border-input);
+  border-radius: var(--radius-pill);
+  padding: 10px 10px 10px 16px;
+  transition: border-color 0.2s;
+
+  &:focus-within {
+    border-color: var(--color-accent);
+  }
+}
+
+.search-icon {
+  display: flex;
+  align-items: center;
+  color: var(--color-text-muted);
+
+  svg {
+    width: 18px;
+    height: 18px;
+  }
+}
+
+.message-input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: var(--color-text-primary);
+  font-size: 15px;
+  font-family: inherit;
+
+  &::placeholder {
+    color: var(--color-text-muted);
+  }
+}
+
+.send-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--color-accent);
+  border: none;
+  color: white;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: background 0.2s;
+
+  svg {
+    width: 18px;
+    height: 18px;
+  }
+
+  &:hover {
+    background: var(--color-accent-hover);
+  }
+}
+
+@media (max-width: 600px) {
+  .logo {
+    width: 160px;
+  }
+
+  .title {
+    font-size: 22px;
+  }
+}

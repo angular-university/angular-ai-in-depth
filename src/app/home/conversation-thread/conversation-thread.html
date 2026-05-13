@@ -1,0 +1,71 @@
+<div class="conversation-thread">
+  <div class="messages" #messagesContainer>
+    @for (message of conversation().messages; track message.id) {
+      @if (message.role === 'user') {
+        <div class="message user-message">
+          <div class="user-bubble">{{ message.content }}</div>
+          <div class="user-avatar">
+            <svg viewBox="0 0 24 24" fill="currentColor">
+              <circle cx="12" cy="8" r="4" />
+              <path d="M20 21a8 8 0 1 0-16 0" />
+            </svg>
+          </div>
+        </div>
+      } @else {
+        <div class="message ai-message">
+          <div class="ai-card">
+            <p class="ai-content">{{ message.content }}</p>
+            <div class="ai-logo">
+              <img src="images/angular-ai-course-logo.png" alt="AI" />
+            </div>
+          </div>
+        </div>
+      }
+    }
+
+    @if (isLoading()) {
+      <div class="loading-indicator">
+        <div class="spinner"></div>
+        <p class="loading-text">It can take up to 20 seconds to get a reply.</p>
+        <p class="loading-subtext">Thinking...</p>
+      </div>
+    }
+  </div>
+
+  <div class="input-area">
+    <div class="input-bar">
+      <span class="search-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="11" cy="11" r="8" />
+          <path d="M21 21l-4.35-4.35" />
+        </svg>
+      </span>
+      <input
+        type="text"
+        class="message-input"
+        placeholder="Ask anything..."
+        [value]="messageText()"
+        (input)="updateMessage($event)"
+        (keydown)="handleKeyDown($event)"
+        autocomplete="off"
+      />
+      <button class="send-btn" (click)="submit()" [disabled]="isLoading()" aria-label="Send message">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+          <line x1="12" y1="19" x2="12" y2="5" />
+          <polyline points="5,12 12,5 19,12" />
+        </svg>
+      </button>
+    </div>
+    <p class="disclaimer">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="warning-icon">
+        <path
+          d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"
+        />
+        <line x1="12" y1="9" x2="12" y2="13" />
+        <line x1="12" y1="17" x2="12.01" y2="17" />
+      </svg>
+      Give our AI as much context as possible, to get the best results. If an error occurs, please try
+      again after a few seconds.
+    </p>
+  </div>
+</div>
