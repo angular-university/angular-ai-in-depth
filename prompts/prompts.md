@@ -10,3 +10,23 @@ These prompts follow the exact sequence used in the course, where we split thing
 Each prompt is large enough that the AI does several things in one go, while remaining small enough for a human to easily verify its output.
 
 
+# Create the UI part of the chat home screen
+
+based on screenshots /ui-screenshots/chat-initial-state-no-history.png and /ui-screenshots/chat-conversation-ongoing-history-filled.png create the home screen.
+
+The route of this screen should be /home, and the user should be redirected to if it accesses a path that does not match any route.
+
+The home screen has a left navigation panel with the chat history that is collapsible, and a logout button in the bottom.
+
+There is an initial state where the logo /public/images/angular-ai-course-logo.png gets displayed in the center of the screen, that initial state corresponds to file /ui-screenshots/chat-initial-state-no-history.png
+
+Then once the conversation starts, the screen looks like /ui-screenshots/chat-conversation-ongoing-history-filled.png.
+
+Don't do backend calls and focus purely on the visual part. add some mock data in a separate file simulating several conversations, each with several chat messages and their reply.
+
+Make the home screen responsive, center the content in the middle of the screen.
+
+the collapsible side menu should be a separate component. the chat history, the initial state and the conversation thread should also be separate components.
+
+Extract CSS theme variables like background colors to a separate theme file that can easily reused across components.
+
