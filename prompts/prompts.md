@@ -70,3 +70,20 @@ make the home page responsive, and extract the responsive theme to a separate
 file so that we can easily make every screen on the application responsive 
 in the future. Extract also any styles can be reused to recreate a similar layout.
 
+## create a node backend skeleton
+
+Inside a /server folder, create an express server with a single root route 
+ that just prints out a very basic server running confirmation HTML page.
+
+Make the server port taken from an environment variable PORT otherwise 
+use a default port 9000 for development.
+
+Add a command npm run server to start the server.  
+make the command start the server in development mode, where the server 
+reloads when a server file changes.
+
+
+
+
+
+
