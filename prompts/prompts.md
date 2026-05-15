@@ -58,3 +58,10 @@ start the server and use pupeteer again, but this
 time open the collapsed panel and click on a
 conversation. Notice that the messages are not properly centered. Maybe a max-width is needed for
 the messages container. Iterate using pupetter until it's fixed.
+
+# fix UI via provided screenshot 
+
+@ui-screenshots/ui-issues/ check these two issues
+and fix them. The right logo to use in both cases is @public/images/angular-university-profile-picture.png
+
+

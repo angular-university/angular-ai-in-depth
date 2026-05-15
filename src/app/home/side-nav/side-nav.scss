@@ -28,13 +28,15 @@
 .logo {
   width: 36px;
   height: 36px;
-  object-fit: contain;
+  object-fit: cover;
+  border-radius: 50%;
 }
 
 .logo-small {
   width: 32px;
   height: 32px;
-  object-fit: contain;
+  object-fit: cover;
+  border-radius: 50%;
 }
 
 .toggle-btn {

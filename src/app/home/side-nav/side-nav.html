@@ -1,7 +1,7 @@
 <aside class="side-nav" [class.collapsed]="collapsed()">
   <div class="nav-header">
     @if (!collapsed()) {
-      <img src="images/angular-ai-course-logo.png" alt="Angular AI" class="logo" />
+      <img src="images/angular-university-profile-picture.png" alt="Angular AI" class="logo" />
     }
     <button class="icon-btn toggle-btn" (click)="toggle.emit()" aria-label="Toggle sidebar">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -13,7 +13,7 @@
 
   @if (collapsed()) {
     <div class="collapsed-icons">
-      <img src="images/angular-ai-course-logo.png" alt="Angular AI" class="logo-small" />
+      <img src="images/angular-university-profile-picture.png" alt="Angular AI" class="logo-small" />
       <button class="icon-btn" (click)="newChat.emit()" aria-label="New chat">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" />
