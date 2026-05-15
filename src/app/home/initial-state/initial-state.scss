@@ -1,3 +1,6 @@
+@use '../../../styles/layout' as layout;
+@use '../../../styles/breakpoints' as bp;
+
 :host {
   display: flex;
   flex: 1;
@@ -11,6 +14,11 @@
   flex: 1;
   gap: 40px;
   padding: 24px;
+
+  @include bp.mobile {
+    gap: 28px;
+    padding: 16px;
+  }
 }
 
 .hero {
@@ -24,6 +32,10 @@
   width: 220px;
   height: auto;
   object-fit: contain;
+
+  @include bp.mobile {
+    width: 140px;
+  }
 }
 
 .title {
@@ -32,6 +44,11 @@
   color: var(--color-text-muted);
   margin: 0;
   letter-spacing: 0.5px;
+  text-align: center;
+
+  @include bp.mobile {
+    font-size: 20px;
+  }
 }
 
 .accent {
@@ -44,18 +61,7 @@
 }
 
 .input-bar {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  background: var(--color-bg-input);
-  border: 1.5px solid var(--color-border-input);
-  border-radius: var(--radius-pill);
-  padding: 10px 10px 10px 16px;
-  transition: border-color 0.2s;
-
-  &:focus-within {
-    border-color: var(--color-accent);
-  }
+  @include layout.input-bar;
 }
 
 .search-icon {
@@ -84,35 +90,5 @@
 }
 
 .send-btn {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
-  background: var(--color-accent);
-  border: none;
-  color: white;
-  cursor: pointer;
-  flex-shrink: 0;
-  transition: background 0.2s;
-
-  svg {
-    width: 18px;
-    height: 18px;
-  }
-
-  &:hover {
-    background: var(--color-accent-hover);
-  }
-}
-
-@media (max-width: 600px) {
-  .logo {
-    width: 160px;
-  }
-
-  .title {
-    font-size: 22px;
-  }
+  @include layout.send-button;
 }

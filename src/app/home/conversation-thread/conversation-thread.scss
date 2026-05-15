@@ -1,3 +1,6 @@
+@use '../../../styles/layout' as layout;
+@use '../../../styles/breakpoints' as bp;
+
 :host {
   display: flex;
   flex: 1;
@@ -32,9 +35,9 @@
 }
 
 .messages-content {
-  max-width: 800px;
-  margin: 0 auto;
-  padding: 24px 32px 16px;
+  @include layout.content-column;
+  padding-top: 24px;
+  padding-bottom: 16px;
   display: flex;
   flex-direction: column;
   gap: 24px;
@@ -59,6 +62,10 @@
   color: var(--color-text-primary);
   font-size: 15px;
   line-height: 1.5;
+
+  @include bp.mobile {
+    max-width: 80%;
+  }
 }
 
 .user-avatar {
@@ -151,23 +158,16 @@
   align-items: center;
   gap: 8px;
   flex-shrink: 0;
+
+  @include bp.mobile {
+    padding: 8px 16px 16px;
+  }
 }
 
 .input-bar {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  background: var(--color-bg-input);
-  border: 1.5px solid var(--color-border-input);
-  border-radius: var(--radius-pill);
-  padding: 10px 10px 10px 16px;
+  @include layout.input-bar;
   width: 100%;
   max-width: 720px;
-  transition: border-color 0.2s;
-
-  &:focus-within {
-    border-color: var(--color-accent);
-  }
 }
 
 .search-icon {
@@ -196,32 +196,7 @@
 }
 
 .send-btn {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
-  background: var(--color-accent);
-  border: none;
-  color: white;
-  cursor: pointer;
-  flex-shrink: 0;
-  transition: background 0.2s, opacity 0.2s;
-
-  svg {
-    width: 18px;
-    height: 18px;
-  }
-
-  &:hover:not(:disabled) {
-    background: var(--color-accent-hover);
-  }
-
-  &:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
-  }
+  @include layout.send-button;
 }
 
 .disclaimer {
@@ -233,28 +208,14 @@
   margin: 0;
   text-align: center;
   max-width: 720px;
+
+  @include bp.mobile {
+    font-size: 11px;
+  }
 }
 
 .warning-icon {
   width: 14px;
   height: 14px;
   flex-shrink: 0;
-}
-
-@media (max-width: 768px) {
-  .messages {
-    padding: 16px 16px 12px;
-  }
-
-  .user-bubble {
-    max-width: 80%;
-  }
-
-  .ai-message {
-    max-width: 90%;
-  }
-
-  .input-area {
-    padding: 8px 16px 16px;
-  }
 }

@@ -1,6 +1,16 @@
+@use '../../../styles/breakpoints' as bp;
+
 :host {
   display: flex;
   flex-shrink: 0;
+
+  @include bp.mobile {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    z-index: var(--z-sidebar);
+  }
 }
 
 .side-nav {
@@ -14,6 +24,22 @@
 
   &.collapsed {
     width: var(--sidebar-width-collapsed);
+  }
+
+  @include bp.mobile {
+    height: 100%;
+    width: var(--sidebar-width-expanded);
+    transform: translateX(-100%);
+    transition: transform var(--transition-sidebar);
+
+    &.collapsed {
+      width: var(--sidebar-width-expanded);
+      transform: translateX(-100%);
+    }
+
+    &:not(.collapsed) {
+      transform: translateX(0);
+    }
   }
 }
 

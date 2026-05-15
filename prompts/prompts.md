@@ -64,4 +64,9 @@ the messages container. Iterate using pupetter until it's fixed.
 @ui-screenshots/ui-issues/ check these two issues
 and fix them. The right logo to use in both cases is @public/images/angular-university-profile-picture.png
 
+# make the screen responsive 
+
+make the home page responsive, and extract the responsive theme to a separate 
+file so that we can easily make every screen on the application responsive 
+in the future. Extract also any styles can be reused to recreate a similar layout.
 

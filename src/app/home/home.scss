@@ -1,19 +1,69 @@
+@use '../../styles/layout' as layout;
+@use '../../styles/breakpoints' as bp;
+
 :host {
   display: block;
   height: 100%;
 }
 
 .layout {
-  display: flex;
-  height: 100%;
-  overflow: hidden;
-  background: var(--color-bg-primary);
+  @include layout.panel-layout;
 }
 
 .main-content {
-  flex: 1;
-  min-width: 0;
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
+  @include layout.panel-main;
+}
+
+// Visible on mobile only when sidebar is closed
+.mobile-menu-btn {
+  display: none;
+
+  @include bp.mobile {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    top: 10px;
+    left: 10px;
+    z-index: calc(var(--z-backdrop) - 1);
+    width: 36px;
+    height: 36px;
+    border-radius: var(--radius-sm);
+    background: transparent;
+    border: none;
+    color: var(--color-text-muted);
+    cursor: pointer;
+
+    svg {
+      width: 22px;
+      height: 22px;
+    }
+
+    &:hover {
+      color: var(--color-text-primary);
+      background: var(--color-bg-hover);
+    }
+  }
+}
+
+.sidebar-open .mobile-menu-btn {
+  @include bp.mobile {
+    display: none;
+  }
+}
+
+// Semi-transparent backdrop behind the sidebar overlay on mobile
+.sidebar-backdrop {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-backdrop);
+  background: rgba(0, 0, 0, 0.5);
+  cursor: pointer;
+}
+
+.sidebar-open .sidebar-backdrop {
+  @include bp.mobile {
+    display: block;
+  }
 }

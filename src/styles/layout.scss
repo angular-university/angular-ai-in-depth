@@ -1,0 +1,90 @@
+@use 'breakpoints' as bp;
+
+// Full-height two-panel layout: collapsible sidebar + scrollable main area.
+// Apply to the outer wrapper of any sidebar+content screen.
+@mixin panel-layout {
+  display: flex;
+  height: 100%;
+  overflow: hidden;
+  background: var(--color-bg-primary);
+}
+
+// The main content area inside a panel-layout.
+// Grows to fill remaining space and allows internal scrolling.
+@mixin panel-main {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+// Makes a component host fill its flex parent completely.
+// Use on :host in any component that lives inside a flex column.
+@mixin host-fill {
+  display: flex;
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+}
+
+// Centered reading column with responsive horizontal padding.
+// Use for message lists, form bodies, or any content that should
+// not stretch to the full viewport width on large screens.
+@mixin content-column($max-width: 800px) {
+  max-width: $max-width;
+  margin: 0 auto;
+  padding-left: 32px;
+  padding-right: 32px;
+
+  @include bp.mobile {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+}
+
+// Pill-shaped input bar shared by initial-state and conversation-thread.
+@mixin input-bar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--color-bg-input);
+  border: 1.5px solid var(--color-border-input);
+  border-radius: var(--radius-pill);
+  padding: 10px 10px 10px 16px;
+  transition: border-color 0.2s;
+
+  &:focus-within {
+    border-color: var(--color-accent);
+  }
+}
+
+// Round send button used inside an input-bar.
+@mixin send-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--color-accent);
+  border: none;
+  color: white;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: background 0.2s, opacity 0.2s;
+
+  svg {
+    width: 18px;
+    height: 18px;
+  }
+
+  &:hover:not(:disabled) {
+    background: var(--color-accent-hover);
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}
