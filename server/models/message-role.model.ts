@@ -1,1 +1,1 @@
-export type MessageRole = 'user' | 'assistant';
+export type MessageRole = 'system' | 'user' | 'assistant';

@@ -84,12 +84,20 @@ reloads when a server file changes.
 
 # create retrieve chat history endpoint
 
-create a GET /api/get-conversations-history endpoint that retrieves all chat history 
+create a GET /api/get-chat-history endpoint that retrieves all chat history 
 from the in-memory DB. 
 
 This only retrieves the conversation one-line summary, but not the full conversation thread.
 
+# create retrieve conversation endpoint
 
+create a /api/get-chat-conversation endpoint to retrieve a single conversation based on id.
+
+it should return a single conversation, with all it's chat messages.
+
+The messages of role 'system' should be filtered out. 
+
+The conversation should be retrieved by id, based on a path variable.
 
 
 
