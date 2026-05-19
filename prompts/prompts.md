@@ -99,6 +99,39 @@ The messages of role 'system' should be filtered out.
 
 The conversation should be retrieved by id, based on a path variable.
 
+# start conversation backend endpoint
+
+Implement a /api/start-conversation route in the backend. This endpoint should take a prompt Id 
+from the request body, and use it to retrieve an initial system prompt from a prompts.ts file.
+
+The goal is that the system prompt cannot be manipulated by the frontend user. 
+The system prompt should limit the AI to answer Angular questions, and nothing more.
+
+Then create an Open AI API conversation with the system prompt at the start 
+followed by the user initial message, taken from the request body. 
+
+Save the conversation in an in-memory store in db-data.ts and create a conversation Id.
+
+notice that there is no need to save the system prompt in the database. 
+
+The conversation should be linked to the system prompt only via the prompt Id. 
+
+This way the system prompt will never reach the frontend accidentally.
+
+Also, we can change the system prompt if needed.
+
+send the conversation to open AI using the Open AI API, and grab a response from Open AI. 
+
+send only the AI response back to the user in the response body, together with the 
+conversation Id.
+
+When calling the OpenAI API, just do a plain HTTP request using a promise-based HTTP 
+client and async await. Don't use any open AI third party node package wrapper.
+
+Don't worry about authentication for now, we will implement it later.
+
+Don't mention OpenAI in the response names, etc. we might change it to another AI provider 
+in the future.
 
 
 

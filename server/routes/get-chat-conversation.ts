@@ -12,7 +12,8 @@ export function getChatConversation(req: Request, res: Response) {
   }
 
   res.json({
-    ...conversation,
+    id: conversation.id,
+    title: conversation.title,
     messages: conversation.messages.filter(m => m.role !== 'system'),
   });
 }

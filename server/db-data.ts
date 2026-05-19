@@ -1,8 +1,10 @@
 import { Conversation } from './models/conversation.model.js';
+import { ChatMessage } from './models/chat-message.model.js';
 
 export const DB_CONVERSATIONS: Conversation[] = [
   {
     id: '1',
+    promptId: 'angular-assistant',
     title: 'What are the new features in Angular 19?',
     messages: [
       { id: 'm1-1', role: 'user', content: 'What are the new features and improvements in Angular 19?' },
@@ -23,6 +25,7 @@ export const DB_CONVERSATIONS: Conversation[] = [
   },
   {
     id: '2',
+    promptId: 'angular-assistant',
     title: 'How to create a component in Angular',
     messages: [
       { id: 'm2-1', role: 'user', content: 'How do I create a component in Angular?' },
@@ -36,6 +39,7 @@ export const DB_CONVERSATIONS: Conversation[] = [
   },
   {
     id: '3',
+    promptId: 'angular-assistant',
     title: 'Angular routing how it works',
     messages: [
       { id: 'm3-1', role: 'user', content: 'Can you explain how Angular routing works?' },
@@ -49,6 +53,7 @@ export const DB_CONVERSATIONS: Conversation[] = [
   },
   {
     id: '4',
+    promptId: 'angular-assistant',
     title: 'What is a service in Angular',
     messages: [
       {
@@ -66,6 +71,7 @@ export const DB_CONVERSATIONS: Conversation[] = [
   },
   {
     id: '5',
+    promptId: 'angular-assistant',
     title: 'Angular signals explained',
     messages: [
       {
@@ -82,3 +88,17 @@ export const DB_CONVERSATIONS: Conversation[] = [
     ],
   },
 ];
+
+export function createConversation(promptId: string, userMessage: string, assistantReply: string): Conversation {
+  const title = userMessage.length > 60 ? userMessage.slice(0, 60) + '...' : userMessage;
+  const conversationId = crypto.randomUUID();
+
+  const messages: ChatMessage[] = [
+    { id: crypto.randomUUID(), role: 'user', content: userMessage },
+    { id: crypto.randomUUID(), role: 'assistant', content: assistantReply },
+  ];
+
+  const conversation: Conversation = { id: conversationId, title, promptId, messages };
+  DB_CONVERSATIONS.push(conversation);
+  return conversation;
+}
