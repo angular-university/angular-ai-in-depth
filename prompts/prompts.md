@@ -142,9 +142,14 @@ takes in the request body the conversation Id and the next user message.
 Retrieves the conversation from the in-memory DB, appends the new user message and send everything 
 to OpenAI to get a new AI reply.
 
-Saves the conversation in in-memory db, and return the last AI response.
+Saves the conversation in in-memory db, and return the last AI response.~~
 
+# add logging
 
+Add appropriate logging to all backend endpoints, so that it's easy to 
+debug and troubleshoot what is going on in case of error. 
+
+Include logging in error scenarios as well. 
 
 
 
