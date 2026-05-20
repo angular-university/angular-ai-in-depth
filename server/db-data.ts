@@ -102,3 +102,18 @@ export function createConversation(promptId: string, userMessage: string, assist
   DB_CONVERSATIONS.push(conversation);
   return conversation;
 }
+
+export function appendMessages(conversationId: string, userMessage: string, assistantReply: string): Conversation {
+  const conversation = DB_CONVERSATIONS.find(c => c.id === conversationId);
+
+  if (!conversation) {
+    throw new Error(`Conversation not found: ${conversationId}`);
+  }
+
+  conversation.messages.push(
+    { id: crypto.randomUUID(), role: 'user', content: userMessage },
+    { id: crypto.randomUUID(), role: 'assistant', content: assistantReply },
+  );
+
+  return conversation;
+}

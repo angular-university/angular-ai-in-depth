@@ -133,7 +133,16 @@ Don't worry about authentication for now, we will implement it later.
 Don't mention OpenAI in the response names, etc. we might change it to another AI provider 
 in the future.
 
+# create continue conversation endpoint
 
+Create a /api/continue-conversation backend endpoint.  
+
+takes in the request body the conversation Id and the next user message.
+
+Retrieves the conversation from the in-memory DB, appends the new user message and send everything 
+to OpenAI to get a new AI reply.
+
+Saves the conversation in in-memory db, and return the last AI response.
 
 
 
