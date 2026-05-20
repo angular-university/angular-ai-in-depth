@@ -151,6 +151,16 @@ debug and troubleshoot what is going on in case of error.
 
 Include logging in error scenarios as well. 
 
+# use chat history endpoints in frontend
+
+create a frontend service ChatHistoryService with two async methods: getAllConversations() 
+that calls /api/get-chat-history and getConversationById()that calls /api/get-chat-conversation
+
+The history chat list on the side menu should be retrieved via getAllConversations().
+
+when clicking on a conversation on the list, the conversation should be returned by id 
+from the getConversationById() method.
+
 
 
 

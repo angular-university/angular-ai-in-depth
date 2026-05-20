@@ -1,5 +1,5 @@
 import { Component, input, output } from '@angular/core';
-import { Conversation } from '../conversation.model';
+import { ConversationSummary } from '../conversation-summary.model';
 import { ChatHistory } from '../chat-history/chat-history';
 
 @Component({
@@ -10,7 +10,7 @@ import { ChatHistory } from '../chat-history/chat-history';
 })
 export class SideNav {
   readonly collapsed = input.required<boolean>();
-  readonly conversations = input.required<Conversation[]>();
+  readonly conversations = input.required<ConversationSummary[]>();
   readonly activeConversationId = input.required<string | null>();
 
   readonly toggle = output<void>();
