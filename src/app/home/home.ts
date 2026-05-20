@@ -2,8 +2,8 @@ import { Component, computed, inject, OnInit, signal } from '@angular/core';
 import { ChatMessage } from './chat-message.model';
 import { Conversation } from './conversation.model';
 import { ConversationSummary } from './conversation-summary.model';
-import { MOCK_AI_RESPONSES } from './mock-data';
 import { ChatHistoryService } from './chat-history.service';
+import { ConversationService } from './conversation.service';
 import { SideNav } from './side-nav/side-nav';
 import { InitialState } from './initial-state/initial-state';
 import { ConversationThread } from './conversation-thread/conversation-thread';
@@ -16,6 +16,7 @@ import { ConversationThread } from './conversation-thread/conversation-thread';
 })
 export class Home implements OnInit {
   private chatHistoryService = inject(ChatHistoryService);
+  private conversationService = inject(ConversationService);
 
   readonly collapsed = signal(true);
   readonly conversations = signal<ConversationSummary[]>([]);
@@ -49,35 +50,35 @@ export class Home implements OnInit {
     const trimmed = text.trim();
     if (!trimmed) return;
 
-    if (!this.activeConversation()) {
-      const newConversation: Conversation = {
-        id: crypto.randomUUID(),
-        title: trimmed.slice(0, 60),
-        messages: [],
-      };
-      this.conversations.update(convs => [{ id: newConversation.id, title: newConversation.title }, ...convs]);
-      this.activeConversation.set(newConversation);
-    }
-
     const userMessage: ChatMessage = {
       id: crypto.randomUUID(),
       role: 'user',
       content: trimmed,
     };
-    this.addMessageToActive(userMessage);
+
     this.isLoading.set(true);
 
-    // START TODO replace this mock code and add error handling
-    await new Promise<void>(resolve => setTimeout(resolve, 2000));
-    const randomIndex = Math.floor(Math.random() * MOCK_AI_RESPONSES.length);
-    // END TODO
-    const aiMessage: ChatMessage = {
-      id: crypto.randomUUID(),
-      role: 'assistant',
-      content: MOCK_AI_RESPONSES[randomIndex],
-    };
-    this.addMessageToActive(aiMessage);
-    this.isLoading.set(false);
+    try {
+      if (!this.activeConversation()) {
+        this.activeConversation.set({ id: '', title: trimmed.slice(0, 60), messages: [userMessage] });
+
+        const { conversationId, reply } = await this.conversationService.startConversation(trimmed);
+
+        this.activeConversation.update(conv => conv ? { ...conv, id: conversationId } : conv);
+        this.conversations.update(convs => [{ id: conversationId, title: trimmed.slice(0, 60) }, ...convs]);
+        this.addMessageToActive({ id: crypto.randomUUID(), role: 'assistant', content: reply });
+      } else {
+        this.addMessageToActive(userMessage);
+
+        const { reply } = await this.conversationService.continueConversation(this.activeConversation()!.id, trimmed);
+
+        this.addMessageToActive({ id: crypto.randomUUID(), role: 'assistant', content: reply });
+      }
+    } catch (error) {
+      console.error('Failed to send message', error);
+    } finally {
+      this.isLoading.set(false);
+    }
   }
 
   private addMessageToActive(message: ChatMessage) {

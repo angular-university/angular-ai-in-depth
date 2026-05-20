@@ -161,6 +161,30 @@ The history chat list on the side menu should be retrieved via getAllConversatio
 when clicking on a conversation on the list, the conversation should be returned by id 
 from the getConversationById() method.
 
+# connect the start and continue endpoints to the frontend
+
+when starting a new conversation in the frontend, call the backend start-conversation endpoint, 
+and show the local loading indicator while waiting for a reply.
+
+display the AI response. when continuing the conversation, call the continue conversation endpoint.
+
+# remove 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
