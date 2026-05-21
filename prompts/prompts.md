@@ -222,7 +222,8 @@ are identical.
 ensure the password mismatch error is displayed if the two fields don't 
 match. display the error next to the confirm password field.
 
-
+Make sure when the buttons Login and Sign Up are disabled, that the disabled 
+state is clearly visible to the user. Make the buttons greyed out.
 
 
 
