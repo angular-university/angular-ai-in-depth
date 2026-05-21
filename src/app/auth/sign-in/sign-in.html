@@ -1,63 +1,67 @@
 <div class="auth-page">
   <div class="auth-content">
-  <div class="auth-left">
-    <img class="course-logo" src="images/angular-ai-course-logo.png" alt="Angular AI In Depth logo" />
-    <p class="course-title">Angular AI In Depth</p>
-  </div>
+    <div class="auth-left">
+      <img class="course-logo" src="images/angular-ai-course-logo.png" alt="Angular AI In Depth logo" />
+      <p class="course-title">Angular AI In Depth</p>
+    </div>
 
-  <div class="auth-right">
-    <div class="auth-card">
-      <div class="card-body">
-        <div class="brand-logo">
-          <img src="images/angular-university-logo.svg" alt="Angular University" />
-        </div>
-
-        <h1 class="auth-heading">Welcome back,</h1>
-
-        <div class="auth-form">
-          <div class="input-wrapper">
-            <input
-              type="email"
-              placeholder="Email"
-              [value]="email()"
-              (input)="updateEmail($event)"
-              autocomplete="email"
-            />
+    <div class="auth-right">
+      <div class="auth-card">
+        <div class="card-body">
+          <div class="brand-logo">
+            <img src="images/angular-university-logo.svg" alt="Angular University" />
           </div>
 
-          <div class="input-wrapper has-toggle">
-            <input
-              [type]="showPassword() ? 'text' : 'password'"
-              placeholder="Password"
-              [value]="password()"
-              (input)="updatePassword($event)"
-              autocomplete="current-password"
-            />
-            <button class="toggle-password" type="button" (click)="togglePassword()" aria-label="Toggle password visibility">
-              @if (showPassword()) {
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24" />
-                  <line x1="1" y1="1" x2="23" y2="23" />
-                </svg>
-              } @else {
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
-                  <circle cx="12" cy="12" r="3" />
-                </svg>
+          <h1 class="auth-heading">Welcome back</h1>
+
+          <form class="auth-form" (submit)="submit()" novalidate>
+            <div class="input-wrapper">
+              <input
+                type="email"
+                placeholder="Email"
+                [formField]="loginForm.email"
+                autocomplete="email"
+              />
+              @if (loginForm.email().touched() && loginForm.email().invalid()) {
+                <span class="field-error">{{ loginForm.email().errors()[0].message }}</span>
               }
-            </button>
-          </div>
+            </div>
 
-          <button class="auth-btn" type="button" (click)="submit()">Login</button>
+            <div class="input-wrapper has-toggle">
+              <input
+                [type]="showPassword() ? 'text' : 'password'"
+                placeholder="Password"
+                [formField]="loginForm.password"
+                autocomplete="current-password"
+              />
+              <button class="toggle-password" type="button" (click)="togglePassword()" aria-label="Toggle password visibility">
+                @if (showPassword()) {
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24" />
+                    <line x1="1" y1="1" x2="23" y2="23" />
+                  </svg>
+                } @else {
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+                    <circle cx="12" cy="12" r="3" />
+                  </svg>
+                }
+              </button>
+              @if (loginForm.password().touched() && loginForm.password().invalid()) {
+                <span class="field-error">{{ loginForm.password().errors()[0].message }}</span>
+              }
+            </div>
+
+            <button class="auth-btn" type="submit" [disabled]="loginForm().invalid()">Login</button>
+          </form>
         </div>
-      </div>
 
-      <div class="card-footer">
-        <p class="auth-footer-text">
-          Don't have an account? <a routerLink="/sign-up">Sign up</a> here
-        </p>
+        <div class="card-footer">
+          <p class="auth-footer-text">
+            Don't have an account? <a routerLink="/sign-up">Sign up</a> here
+          </p>
+        </div>
       </div>
     </div>
-  </div>
   </div>
 </div>

@@ -207,6 +207,14 @@ It didn't work. Didn't do anything. Suggestion - add a max-width
 in desktop screens, and stack things vertically on mobile. 
 Iterate with pupeteer.
 
+# fix authentication forms
+
+In both the sign up and login screens, an Angular form was not used.
+
+Refactor both screens into using the latest Angular Signal Forms. 
+
+
+
 
 
 

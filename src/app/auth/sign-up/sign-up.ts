@@ -1,30 +1,26 @@
 import { Component, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
+import { email, form, FormField, minLength, required } from '@angular/forms/signals';
 
 @Component({
   selector: 'sign-up',
-  imports: [RouterLink],
+  imports: [RouterLink, FormField],
   templateUrl: './sign-up.html',
   styleUrl: './sign-up.scss',
 })
 export class SignUp {
-  readonly email = signal('');
-  readonly password = signal('');
-  readonly confirmPassword = signal('');
   readonly showPassword = signal(false);
   readonly showConfirmPassword = signal(false);
 
-  updateEmail(event: Event) {
-    this.email.set((event.target as HTMLInputElement).value);
-  }
+  readonly signUpModel = signal({ email: '', password: '', confirmPassword: '' });
 
-  updatePassword(event: Event) {
-    this.password.set((event.target as HTMLInputElement).value);
-  }
-
-  updateConfirmPassword(event: Event) {
-    this.confirmPassword.set((event.target as HTMLInputElement).value);
-  }
+  readonly signUpForm = form(this.signUpModel, (fieldPath) => {
+    required(fieldPath.email, { message: 'Email is required' });
+    email(fieldPath.email, { message: 'Enter a valid email address' });
+    required(fieldPath.password, { message: 'Password is required' });
+    minLength(fieldPath.password, 8, { message: 'Password must be at least 8 characters' });
+    required(fieldPath.confirmPassword, { message: 'Please confirm your password' });
+  });
 
   togglePassword() {
     this.showPassword.update(visible => !visible);
@@ -35,6 +31,8 @@ export class SignUp {
   }
 
   submit() {
-    // Will be wired to the auth service
+    if (this.signUpForm().valid()) {
+      // Will be wired to the auth service
+    }
   }
 }

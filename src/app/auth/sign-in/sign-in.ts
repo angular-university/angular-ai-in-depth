@@ -1,30 +1,31 @@
 import { Component, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
+import { email, form, FormField, required } from '@angular/forms/signals';
 
 @Component({
   selector: 'sign-in',
-  imports: [RouterLink],
+  imports: [RouterLink, FormField],
   templateUrl: './sign-in.html',
   styleUrl: './sign-in.scss',
 })
 export class SignIn {
-  readonly email = signal('');
-  readonly password = signal('');
   readonly showPassword = signal(false);
 
-  updateEmail(event: Event) {
-    this.email.set((event.target as HTMLInputElement).value);
-  }
+  readonly loginModel = signal({ email: '', password: '' });
 
-  updatePassword(event: Event) {
-    this.password.set((event.target as HTMLInputElement).value);
-  }
+  readonly loginForm = form(this.loginModel, (fieldPath) => {
+    required(fieldPath.email, { message: 'Email is required' });
+    email(fieldPath.email, { message: 'Enter a valid email address' });
+    required(fieldPath.password, { message: 'Password is required' });
+  });
 
   togglePassword() {
     this.showPassword.update(visible => !visible);
   }
 
   submit() {
-    // Will be wired to the auth service
+    if (this.loginForm().valid()) {
+      // Will be wired to the auth service
+    }
   }
 }
