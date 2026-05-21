@@ -1,6 +1,7 @@
 import { Component, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { email, form, FormField, minLength, required } from '@angular/forms/signals';
+import { passwordsMatch } from '../passwords-match.validator';
 
 @Component({
   selector: 'sign-up',
@@ -20,6 +21,7 @@ export class SignUp {
     required(fieldPath.password, { message: 'Password is required' });
     minLength(fieldPath.password, 8, { message: 'Password must be at least 8 characters' });
     required(fieldPath.confirmPassword, { message: 'Please confirm your password' });
+    passwordsMatch(fieldPath.confirmPassword, fieldPath.password, { message: 'Passwords do not match' });
   });
 
   togglePassword() {

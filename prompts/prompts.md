@@ -213,9 +213,14 @@ In both the sign up and login screens, an Angular form was not used.
 
 Refactor both screens into using the latest Angular Signal Forms. 
 
+# add custom form field validator
 
+In the sign up screen only, we need an Angular signal forms custom 
+field validator that checks if the password and confirm password fields
+are identical. 
 
-
+ensure the password mismatch error is displayed if the two fields don't 
+match. display the error next to the confirm password field.
 
 
 
