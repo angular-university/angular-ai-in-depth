@@ -1,7 +1,10 @@
 import { Conversation } from './models/conversation.model.js';
 import { ChatMessage } from './models/chat-message.model.js';
 
-export const DB_CONVERSATIONS: Conversation[] = [
+export const DB_CONVERSATIONS: Conversation[] = [];
+
+/*
+const MOCK_CONVERSATIONS: Conversation[] = [
   {
     id: '1',
     promptId: 'angular-assistant',
@@ -88,6 +91,7 @@ export const DB_CONVERSATIONS: Conversation[] = [
     ],
   },
 ];
+*/
 
 export function createConversation(promptId: string, userMessage: string, assistantReply: string): Conversation {
   const title = userMessage.length > 60 ? userMessage.slice(0, 60) + '...' : userMessage;

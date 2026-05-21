@@ -168,7 +168,19 @@ and show the local loading indicator while waiting for a reply.
 
 display the AI response. when continuing the conversation, call the continue conversation endpoint.
 
-# remove 
+# remove chat history mock data 
+
+in the backend, don't return any mock data for conversations history.
+
+But don't delete the mock data, keep it around in case it's needed. Just don't use it. 
+
+# fix scroll to bottom chat logic
+
+When a new AI reply is retrieved with a lot of text, 
+
+the chat is not getting correctly scrolled to the bottom.
+
+
 
 
 

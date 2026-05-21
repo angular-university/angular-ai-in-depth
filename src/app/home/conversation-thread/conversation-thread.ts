@@ -15,12 +15,17 @@ export class ConversationThread implements AfterViewChecked {
 
   readonly messagesContainer = viewChild<ElementRef<HTMLDivElement>>('messagesContainer');
 
-  private shouldScrollToBottom = false;
+  private lastMessageCount = 0;
+  private wasLoading = false;
 
   ngAfterViewChecked() {
-    if (this.shouldScrollToBottom) {
+    const messageCount = this.conversation().messages.length;
+    const loading = this.isLoading();
+
+    if (messageCount !== this.lastMessageCount || loading !== this.wasLoading) {
+      this.lastMessageCount = messageCount;
+      this.wasLoading = loading;
       this.scrollToBottom();
-      this.shouldScrollToBottom = false;
     }
   }
 
@@ -34,7 +39,6 @@ export class ConversationThread implements AfterViewChecked {
     if (!text) return;
     this.messageSent.emit(text);
     this.messageText.set('');
-    this.shouldScrollToBottom = true;
   }
 
   handleKeyDown(event: KeyboardEvent) {
