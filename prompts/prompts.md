@@ -180,10 +180,32 @@ When a new AI reply is retrieved with a lot of text,
 
 the chat is not getting correctly scrolled to the bottom.
 
+# Create authentication screens
 
+Based on the UI screenshots available in the /ui-screenshots folder, 
+generate the frontend Angular part of just the sign-in and sign up screens.
 
+Use sign-in-screen.png and sign-up-screen.png and create those screens. 
+Don't make any API or service calls, focus on creating the Angular components 
+with the correct HTML and CSS.
 
+The two screens have very similar styles, refactor common parts into a common scss file.
 
+You can find the images you need in the public/images folder. 
+
+The left image above "Angular AI In Depth" is
+angular-ai-course-logo.png, while the Angular University logo used inside the right-side box 
+is angular-university-logo.svg
+
+# fix auth screens layout issue
+
+@ui-screenshots/ui-issues/ui-issue-3-layout-not-centered.png
+both the login and the sign up screens have this problem, the UI is not 
+centered. 
+
+It didn't work. Didn't do anything. Suggestion - add a max-width 
+in desktop screens, and stack things vertically on mobile. 
+Iterate with pupeteer.
 
 
 
