@@ -7,6 +7,7 @@ import { getChatConversation } from './routes/get-chat-conversation.js';
 import { startConversation } from './routes/start-conversation.js';
 import { continueConversation } from './routes/continue-conversation.js';
 import { signIn } from './routes/sign-in.js';
+import { signUp } from './routes/sign-up.js';
 
 const app = express();
 const port = process.env['PORT'] ?? 9000;
@@ -20,6 +21,7 @@ app.get('/api/get-chat-conversation/:id', getChatConversation);
 app.post('/api/start-conversation', startConversation);
 app.post('/api/continue-conversation', continueConversation);
 app.post('/api/sign-in', signIn);
+app.post('/api/sign-up', signUp);
 
 app.listen(port, () => {
   console.log(`Server listening on http://localhost:${port}`);

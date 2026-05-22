@@ -13,6 +13,12 @@ export const DB_USERS: User[] = [
 
 export const DB_CONVERSATIONS: Conversation[] = [];
 
+export function createUser(email: string, passwordHash: string): User {
+  const user: User = { id: crypto.randomUUID(), email, passwordHash };
+  DB_USERS.push(user);
+  return user;
+}
+
 /*
 const MOCK_CONVERSATIONS: Conversation[] = [
   {

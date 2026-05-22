@@ -245,7 +245,13 @@ Add a sample  key to .env and .env.example.
 
 The JWT secret should be taken from the environment variable JWT_SECRET
 
+# Add user creation route to the backend server
 
+Add an authentication backend user creation endpoint mapped to 
+the url /api/sign-up that takes in an email and password, 
+creates a new user and adds it to the in-memory data store.
+
+The backend response should return both the user profile and a JWT. 
 
 
 
