@@ -225,10 +225,25 @@ match. display the error next to the confirm password field.
 Make sure when the buttons Login and Sign Up are disabled, that the disabled 
 state is clearly visible to the user. Make the buttons greyed out.
 
+# add authentication route to the backend server
 
+Add an authentication backend endpoint mapped to url /api/sign-in that takes in an email 
+and password, and authenticates the user.
 
+Add some mock data for the user, with email test@angular-university.io and password angular.
 
+Make the passwords hashed and salted according to the latest OWASP recommended standards.
 
+Don't modify any frontend code, this is purely a backend task.
+
+The backend service /api/sign-in should return a signed JWT in its response, 
+besides the user profile itself.
+
+use HS256 JWTs, assume the key is on the .env file. 
+
+Add a sample  key to .env and .env.example.
+
+The JWT secret should be taken from the environment variable JWT_SECRET
 
 
 

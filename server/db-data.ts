@@ -1,5 +1,15 @@
 import { Conversation } from './models/conversation.model.js';
 import { ChatMessage } from './models/chat-message.model.js';
+import { User } from './models/user.model.js';
+
+export const DB_USERS: User[] = [
+  {
+    id: 'a1b2c3d4-e5f6-7890-abcd-ef1234567890',
+    email: 'test@angular-university.io',
+    // argon2id hash of 'angular' — m=19456, t=2, p=1 (OWASP recommended)
+    passwordHash: '$argon2id$v=19$m=19456,t=2,p=1$Upa9wDMIbwYGDuZ6Xiwz3w$jvcTPmGyCk9xLHO5TFSSp0KDqvbZaXQXrHnDhhrVtMY',
+  },
+];
 
 export const DB_CONVERSATIONS: Conversation[] = [];
 
