@@ -253,6 +253,27 @@ creates a new user and adds it to the in-memory data store.
 
 The backend response should return both the user profile and a JWT. 
 
+# reusable user messages component
+
+create a reusable user messages component that allows to display errors to the user in a 
+top message horizontal bar on top of the screen.
+
+The messages bar should be closeable. It should also allow to display informational messages 
+and warnings, as well as success messages.
+
+apply the messages component in one single place, the application root component.
+
+# reusable user messages service
+
+create a shared signals-based user messages service that can be used by any screen to 
+interact with the user messages component.
+
+Add a clear all method. 
+
+
+
+
+
 
 
 
