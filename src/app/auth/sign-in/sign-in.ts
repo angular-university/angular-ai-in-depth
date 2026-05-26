@@ -1,11 +1,11 @@
 import { Component, inject, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { email, form, FormField, required } from '@angular/forms/signals';
+import { email, form, FormField, FormRoot, required } from '@angular/forms/signals';
 import { AuthService } from '../../shared/auth/auth.service';
 
 @Component({
   selector: 'sign-in',
-  imports: [RouterLink, FormField],
+  imports: [RouterLink, FormField, FormRoot],
   templateUrl: './sign-in.html',
   styleUrl: './sign-in.scss',
 })
@@ -21,22 +21,23 @@ export class SignIn {
     required(fieldPath.email, { message: 'Email is required' });
     email(fieldPath.email, { message: 'Enter a valid email address' });
     required(fieldPath.password, { message: 'Password is required' });
+  }, {
+    submission: {
+      action: async () => {
+        this.isLoading.set(true);
+        try {
+          await this.authService.signIn(
+            this.loginForm.email().value(),
+            this.loginForm.password().value(),
+          );
+        } finally {
+          this.isLoading.set(false);
+        }
+      },
+    },
   });
 
   togglePassword() {
     this.showPassword.update(visible => !visible);
-  }
-
-  async submit() {
-    if (this.loginForm().invalid()) return;
-    this.isLoading.set(true);
-    try {
-      await this.authService.signIn(
-        this.loginForm.email().value(),
-        this.loginForm.password().value(),
-      );
-    } finally {
-      this.isLoading.set(false);
-    }
   }
 }

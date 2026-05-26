@@ -318,6 +318,14 @@ It should just read it from local storage and make it available.
 
 The clear method should clear the profile from memory, but not from local storage. 
 
+# prevent form submission
+
+The sign-in button is currently submitting the form, causing an 
+accidental page reload. 
+
+Look up how to fix in Angular Signal Forms.
+
+
 
 
 
