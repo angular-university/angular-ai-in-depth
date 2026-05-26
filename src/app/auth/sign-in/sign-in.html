@@ -52,7 +52,9 @@
               }
             </div>
 
-            <button class="auth-btn" type="submit" [disabled]="loginForm().invalid()">Login</button>
+            <button class="auth-btn" type="submit" [disabled]="loginForm().invalid() || isLoading()">
+              {{ isLoading() ? 'Signing in...' : 'Login' }}
+            </button>
           </form>
         </div>
 

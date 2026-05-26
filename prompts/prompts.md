@@ -283,9 +283,40 @@ that gets shown whenever a router transition is ongoing.
 created a shared stateful signal-based GlobalLoadingService that can be used to
 turn on and off the global loading indicator from anywhere in the application.
 
+# implement frontend authentication
 
+Create an angular AuthService that has a sign-in  method, that calls the sign in 
+backend endpoint.
 
+Handle authentication error scenarios properly by displaying an error message to the user. 
+If authentication is successful, send the user to the home screen.
 
+Use the service to implement the sign in screen.
+
+on the sign-in screen, retrieve the JWT from the response and store it in local storage, 
+to allow future requests to be validated by the server.
+
+store the user profile and the token separately in local storage.
+
+to make the user profile available everywhere in the application, create a shared 
+singleton UserProfile service, and set it with the user information.
+
+the user profile service should reload the profile from local storage between refreshes.
+
+# fix user profile and auth services 
+
+the user profile and the auth service are mixing responsibilities. 
+
+the auth service should not depend on the user profile service. Instead, it should set
+the profile and token directly in local storage.
+
+You can put the key names in a shared file. 
+
+the user profile should not allow its client component to set the profile. 
+
+It should just read it from local storage and make it available. 
+
+The clear method should clear the profile from memory, but not from local storage. 
 
 
 
