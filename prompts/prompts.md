@@ -270,6 +270,19 @@ interact with the user messages component.
 
 Add a clear all method. 
 
+# loading indicator
+
+create a reusable loading indicator Angular component that can be used anywhere
+on the application.  Use the gif available in public/images/loading-indicator.gif
+
+# global loading indicator
+
+use the reusable loading indicator just created to create a global loading indicator
+that gets shown whenever a router transition is ongoing.
+
+created a shared stateful signal-based GlobalLoadingService that can be used to
+turn on and off the global loading indicator from anywhere in the application.
+
 
 
 
