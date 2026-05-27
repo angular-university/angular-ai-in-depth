@@ -356,6 +356,11 @@ If the user is created successfully send it to home screen, otherwise display an
 
 store the user profile and token on local storage, just like in the sign-in screen.
 
+# implement logout
+
+add a logout method to the authentication service. 
+implement the logout button, redirect to login page and clear profile and token 
+from local storage.
 
 
 

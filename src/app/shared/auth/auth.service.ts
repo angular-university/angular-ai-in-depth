@@ -36,6 +36,12 @@ export class AuthService {
     }
   }
 
+  async logout() {
+    localStorage.removeItem(PROFILE_STORAGE_KEY);
+    localStorage.removeItem(TOKEN_STORAGE_KEY);
+    await this.router.navigateByUrl('/sign-in');
+  }
+
   private storeSession(response: SignInResponse) {
     localStorage.setItem(PROFILE_STORAGE_KEY, JSON.stringify(response.user));
     localStorage.setItem(TOKEN_STORAGE_KEY, response.token);

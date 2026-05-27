@@ -7,6 +7,7 @@ import { ConversationService } from './conversation.service';
 import { SideNav } from './side-nav/side-nav';
 import { InitialState } from './initial-state/initial-state';
 import { ConversationThread } from './conversation-thread/conversation-thread';
+import { AuthService } from '../shared/auth/auth.service';
 
 @Component({
   selector: 'home',
@@ -17,6 +18,7 @@ import { ConversationThread } from './conversation-thread/conversation-thread';
 export class Home implements OnInit {
   private chatHistoryService = inject(ChatHistoryService);
   private conversationService = inject(ConversationService);
+  private authService = inject(AuthService);
 
   readonly collapsed = signal(true);
   readonly conversations = signal<ConversationSummary[]>([]);
@@ -42,8 +44,8 @@ export class Home implements OnInit {
     this.activeConversation.set(null);
   }
 
-  logout() {
-    // Will navigate to login once auth is implemented
+  async logout() {
+    await this.authService.logout();
   }
 
   async sendMessage(text: string) {
