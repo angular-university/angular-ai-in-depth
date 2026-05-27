@@ -55,6 +55,8 @@ export async function signUp(req: Request, res: Response) {
     { algorithm: 'HS256', expiresIn: '7d' },
   );
 
+  await new Promise(resolve => setTimeout(resolve, 1500));
+
   req.log.info({ email }, 'User account created successfully');
 
   const response: SignInResponse = {

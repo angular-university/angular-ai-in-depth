@@ -325,7 +325,12 @@ accidental page reload.
 
 Look up how to fix in Angular Signal Forms.
 
+# add a delay to auth endpoints
 
+add a small delay to the sign in and user creation backend endpoints, 
+so that we see the loading indicator on the frontend
+
+use the global loading indicator on the sign-in screen
 
 
 

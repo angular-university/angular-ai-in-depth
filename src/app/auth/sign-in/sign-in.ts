@@ -2,6 +2,7 @@ import { Component, inject, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { email, form, FormField, FormRoot, required } from '@angular/forms/signals';
 import { AuthService } from '../../shared/auth/auth.service';
+import { GlobalLoadingService } from '../../shared/loading-indicator/global-loading.service';
 
 @Component({
   selector: 'sign-in',
@@ -11,9 +12,9 @@ import { AuthService } from '../../shared/auth/auth.service';
 })
 export class SignIn {
   private readonly authService = inject(AuthService);
+  private readonly globalLoading = inject(GlobalLoadingService);
 
   readonly showPassword = signal(false);
-  readonly isLoading = signal(false);
 
   readonly loginModel = signal({ email: '', password: '' });
 
@@ -24,14 +25,14 @@ export class SignIn {
   }, {
     submission: {
       action: async () => {
-        this.isLoading.set(true);
+        this.globalLoading.show();
         try {
           await this.authService.signIn(
             this.loginForm.email().value(),
             this.loginForm.password().value(),
           );
         } finally {
-          this.isLoading.set(false);
+          this.globalLoading.hide();
         }
       },
     },
