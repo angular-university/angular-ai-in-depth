@@ -349,6 +349,12 @@ as it's no longer necessary.
 create an HTTP interceptor that takes the JWT from local storage and appends it in a 
 header to every request sent to the server.
 
+# implement frontend user creation
+
+Add a createUser method to AuthService, and call it in the sign-up screen. 
+If the user is created successfully send it to home screen, otherwise display an error.
+
+store the user profile and token on local storage, just like in the sign-in screen.
 
 
 

@@ -14,7 +14,7 @@
 
           <h1 class="auth-heading">Sign Up</h1>
 
-          <form class="auth-form" (submit)="submit()" novalidate>
+          <form class="auth-form" [formRoot]="signUpForm">
             <div class="input-wrapper">
               <input
                 type="email"

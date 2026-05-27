@@ -5,7 +5,6 @@ import { firstValueFrom } from 'rxjs';
 import { UserMessagesService } from '../user-messages/user-messages.service';
 import { SignInResponse } from './sign-in-response.model';
 import { PROFILE_STORAGE_KEY, TOKEN_STORAGE_KEY } from './auth-storage-keys';
-import {UserProfile} from './user-profile.model';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
@@ -18,21 +17,32 @@ export class AuthService {
       const response = await firstValueFrom(
         this.http.post<SignInResponse>('/api/sign-in', { email, password }),
       );
-      localStorage.setItem(PROFILE_STORAGE_KEY, JSON.stringify(response.user));
-      localStorage.setItem(TOKEN_STORAGE_KEY, response.token);
+      this.storeSession(response);
       await this.router.navigateByUrl('/home');
     } catch (error: unknown) {
-      const message = extractErrorMessage(error);
-      this.userMessagesService.error(message);
+      this.userMessagesService.error(extractErrorMessage(error, 'Sign in failed. Please try again.'));
     }
   }
 
-  getToken(): string | null {
-    return localStorage.getItem(TOKEN_STORAGE_KEY);
+  async createUser(email: string, password: string) {
+    try {
+      const response = await firstValueFrom(
+        this.http.post<SignInResponse>('/api/sign-up', { email, password }),
+      );
+      this.storeSession(response);
+      await this.router.navigateByUrl('/home');
+    } catch (error: unknown) {
+      this.userMessagesService.error(extractErrorMessage(error, 'Account creation failed. Please try again.'));
+    }
+  }
+
+  private storeSession(response: SignInResponse) {
+    localStorage.setItem(PROFILE_STORAGE_KEY, JSON.stringify(response.user));
+    localStorage.setItem(TOKEN_STORAGE_KEY, response.token);
   }
 }
 
-function extractErrorMessage(error: unknown): string {
+function extractErrorMessage(error: unknown, fallback: string): string {
   if (
     error !== null &&
     typeof error === 'object' &&
@@ -44,5 +54,5 @@ function extractErrorMessage(error: unknown): string {
   ) {
     return error.error.error;
   }
-  return 'Sign in failed. Please try again.';
+  return fallback;
 }
