@@ -344,6 +344,21 @@ Refactor the sign-in screen, to remove the use of the global loading service,
 as it's no longer necessary.
 
 
+# Authentication HTTP interceptor
+
+create an HTTP interceptor that takes the JWT from local storage and appends it in a 
+header to every request sent to the server.
+
+
+
+
+
+
+
+
+
+
+
 
 
 
