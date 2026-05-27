@@ -332,7 +332,16 @@ so that we see the loading indicator on the frontend
 
 use the global loading indicator on the sign-in screen
 
+# Http loading interceptor
 
+create and plug in a global http interceptor that turns on the global loading indicator 
+when the request starts and turns it off when the request completes successfully or fails.
+
+use the GlobalLoadingService to communicate with the global loading indicator. 
+make sure the ConversationService does not Trigger the global loading indicator.
+
+Refactor the sign-in screen, to remove the use of the global loading service,
+as it's no longer necessary.
 
 
 

@@ -1,14 +1,15 @@
-import { Injectable, signal } from '@angular/core';
+import { computed, Injectable, signal } from '@angular/core';
 
 @Injectable({ providedIn: 'root' })
 export class GlobalLoadingService {
-  readonly loading = signal(false);
+  private readonly activeCount = signal(0);
+  readonly loading = computed(() => this.activeCount() > 0);
 
   show() {
-    this.loading.set(true);
+    this.activeCount.update(count => count + 1);
   }
 
   hide() {
-    this.loading.set(false);
+    this.activeCount.update(count => Math.max(0, count - 1));
   }
 }
