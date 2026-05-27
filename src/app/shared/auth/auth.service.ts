@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { firstValueFrom } from 'rxjs';
 import { UserMessagesService } from '../user-messages/user-messages.service';
+import { UserProfileService } from './user-profile.service';
 import { SignInResponse } from './sign-in-response.model';
 import { PROFILE_STORAGE_KEY, TOKEN_STORAGE_KEY } from './auth-storage-keys';
 
@@ -11,6 +12,7 @@ export class AuthService {
   private readonly http = inject(HttpClient);
   private readonly router = inject(Router);
   private readonly userMessagesService = inject(UserMessagesService);
+  private readonly userProfileService = inject(UserProfileService);
 
   async signIn(email: string, password: string) {
     try {
@@ -45,6 +47,7 @@ export class AuthService {
   private storeSession(response: SignInResponse) {
     localStorage.setItem(PROFILE_STORAGE_KEY, JSON.stringify(response.user));
     localStorage.setItem(TOKEN_STORAGE_KEY, response.token);
+    this.userProfileService.reload();
   }
 }
 

@@ -373,7 +373,13 @@ Apply the middleware also to the get chat history and get chat conversation endp
 
 for all those endpoints add a userId property to the data saved in the database.
 
+# add authentication guard
 
+Create an authentication guard that redirects the user to the sign in screen if
+the user is not properly authenticated.
+
+Use the user profile service to know if the user is logged in or not.
+apply the guard to the home screen only.
 
 
 
