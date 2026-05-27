@@ -362,6 +362,17 @@ add a logout method to the authentication service.
 implement the logout button, redirect to login page and clear profile and token 
 from local storage.
 
+# Create an authentication middleware
+
+Create a middleware that ensures the request contains a valid JWT, and that 
+a user is correctly logged in. Make the user Id available in the request. 
+
+Apply the middleware to the start conversation and continue conversation routes.
+
+Apply the middleware also to the get chat history and get chat conversation endpoints.
+
+for all those endpoints add a userId property to the data saved in the database.
+
 
 
 

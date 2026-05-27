@@ -36,7 +36,7 @@ export async function startConversation(req: Request, res: Response) {
       { role: 'user', content: message },
     ]);
 
-    const conversation = createConversation(promptId, message, reply);
+    const conversation = createConversation(promptId, req.userId, message, reply);
     req.log.info({ conversationId: conversation.id, promptId }, 'Conversation created successfully');
 
     const responseBody: StartConversationResponse = {

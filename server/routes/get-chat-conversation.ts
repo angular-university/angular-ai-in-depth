@@ -4,7 +4,7 @@ import { DB_CONVERSATIONS } from '../db-data.js';
 export function getChatConversation(req: Request, res: Response) {
   const { id } = req.params;
 
-  const conversation = DB_CONVERSATIONS.find(c => c.id === id);
+  const conversation = DB_CONVERSATIONS.find(c => c.id === id && c.userId === req.userId);
 
   if (!conversation) {
     req.log.warn({ conversationId: id }, 'Conversation not found');

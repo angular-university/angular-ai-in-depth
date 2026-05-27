@@ -20,7 +20,7 @@ export async function continueConversation(req: Request, res: Response) {
     return;
   }
 
-  const conversation = DB_CONVERSATIONS.find(c => c.id === conversationId);
+  const conversation = DB_CONVERSATIONS.find(c => c.id === conversationId && c.userId === req.userId);
 
   if (!conversation) {
     req.log.warn({ conversationId }, 'Conversation not found');

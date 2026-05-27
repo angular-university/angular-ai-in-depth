@@ -109,7 +109,7 @@ const MOCK_CONVERSATIONS: Conversation[] = [
 ];
 */
 
-export function createConversation(promptId: string, userMessage: string, assistantReply: string): Conversation {
+export function createConversation(promptId: string, userId: string, userMessage: string, assistantReply: string): Conversation {
   const title = userMessage.length > 60 ? userMessage.slice(0, 60) + '...' : userMessage;
   const conversationId = crypto.randomUUID();
 
@@ -118,7 +118,7 @@ export function createConversation(promptId: string, userMessage: string, assist
     { id: crypto.randomUUID(), role: 'assistant', content: assistantReply },
   ];
 
-  const conversation: Conversation = { id: conversationId, title, promptId, messages };
+  const conversation: Conversation = { id: conversationId, title, promptId, userId, messages };
   DB_CONVERSATIONS.push(conversation);
   return conversation;
 }
