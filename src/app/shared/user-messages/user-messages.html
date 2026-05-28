@@ -1,0 +1,20 @@
+@if (messagesService.messages().length > 0) {
+  <div class="messages-container" role="alert" aria-live="polite">
+    @for (message of messagesService.messages(); track message.id) {
+      <div class="message-bar" [class]="'message-bar--' + message.type">
+        <span class="message-text">{{ message.text }}</span>
+        <button
+          class="dismiss-btn"
+          type="button"
+          (click)="messagesService.dismiss(message.id)"
+          aria-label="Dismiss message"
+        >
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <line x1="18" y1="6" x2="6" y2="18" />
+            <line x1="6" y1="6" x2="18" y2="18" />
+          </svg>
+        </button>
+      </div>
+    }
+  </div>
+}

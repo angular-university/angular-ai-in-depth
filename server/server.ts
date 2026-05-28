@@ -1,42 +1,29 @@
 import 'dotenv/config';
 import express from 'express';
 import pinoHttp from 'pino-http';
-import { logger } from './logger';
-import { root } from './routes/root';
-import { signIn } from './routes/sign-in';
-import { signUp } from './routes/sign-up';
-import { startConversation } from './routes/start-conversation';
-import { continueConversation } from './routes/continue-conversation';
-import { getConversations } from './routes/get-conversations';
-import { getConversation } from './routes/get-conversation';
-import { requireAuth } from './middleware/auth.middleware';
-import { seedUsers } from './utils/seed-users';
-
-const PORT = process.env['PORT'] ?? 9000;
+import { rootRoute } from './routes/root.js';
+import { getConversationsHistory } from './routes/get-conversations-history.js';
+import { getChatConversation } from './routes/get-chat-conversation.js';
+import { startConversation } from './routes/start-conversation.js';
+import { continueConversation } from './routes/continue-conversation.js';
+import { signIn } from './routes/sign-in.js';
+import { signUp } from './routes/sign-up.js';
+import { requireAuth } from './middleware/auth.middleware.js';
 
 const app = express();
+const port = process.env['PORT'] ?? 9000;
 
+app.use(pinoHttp());
 app.use(express.json());
-app.use(pinoHttp({ logger }));
 
-app.get('/', root);
-
-app.post('/api/sign-in', signIn);
-app.post('/api/sign-up', signUp);
+app.get('/', rootRoute);
+app.get('/api/get-chat-history', requireAuth, getConversationsHistory);
+app.get('/api/get-chat-conversation/:id', requireAuth, getChatConversation);
 app.post('/api/start-conversation', requireAuth, startConversation);
 app.post('/api/continue-conversation', requireAuth, continueConversation);
-app.get('/api/get-conversations-history', requireAuth, getConversations);
-app.get('/api/get-conversation/:id', requireAuth, getConversation);
+app.post('/api/sign-in', signIn);
+app.post('/api/sign-up', signUp);
 
-async function startServer() {
-  await seedUsers();
-
-  app.listen(PORT, () => {
-    logger.info({ port: PORT }, 'Server running');
-  });
-}
-
-startServer().catch((err) => {
-  logger.error({ err }, 'Failed to start server');
-  process.exit(1);
+app.listen(port, () => {
+  console.log(`Server listening on http://localhost:${port}`);
 });

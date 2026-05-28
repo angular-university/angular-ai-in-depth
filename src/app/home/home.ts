@@ -1,126 +1,91 @@
-import { Component, inject, OnInit, signal } from '@angular/core';
-import { ChatSidebar } from './sidebar/sidebar';
-import { WelcomeScreen } from './welcome-screen/welcome-screen';
-import { ChatConversation } from './conversation/conversation';
-import { ChatMessage, Conversation } from './chat.model';
-import { ConversationSummary } from './chat-history.model';
+import { Component, computed, inject, OnInit, signal } from '@angular/core';
+import { ChatMessage } from './chat-message.model';
+import { Conversation } from './conversation.model';
+import { ConversationSummary } from './conversation-summary.model';
 import { ChatHistoryService } from './chat-history.service';
-import { ChatService } from './chat.service';
-import { AuthService } from '../auth/auth.service';
+import { ConversationService } from './conversation.service';
+import { SideNav } from './side-nav/side-nav';
+import { InitialState } from './initial-state/initial-state';
+import { ConversationThread } from './conversation-thread/conversation-thread';
+import { AuthService } from '../shared/auth/auth.service';
 
 @Component({
   selector: 'home',
+  imports: [SideNav, InitialState, ConversationThread],
   templateUrl: './home.html',
   styleUrl: './home.scss',
-  imports: [ChatSidebar, WelcomeScreen, ChatConversation],
 })
 export class Home implements OnInit {
-  private readonly authService = inject(AuthService);
-  private readonly chatHistoryService = inject(ChatHistoryService);
-  private readonly chatService = inject(ChatService);
+  private chatHistoryService = inject(ChatHistoryService);
+  private conversationService = inject(ConversationService);
+  private authService = inject(AuthService);
 
-  sidebarCollapsed = signal(true);
-  conversationSummaries = signal<ConversationSummary[]>([]);
-  activeConversation = signal<Conversation | null>(null);
-  isLoading = signal(false);
+  readonly collapsed = signal(true);
+  readonly conversations = signal<ConversationSummary[]>([]);
+  readonly activeConversation = signal<Conversation | null>(null);
+  readonly isLoading = signal(false);
+
+  readonly activeConversationId = computed(() => this.activeConversation()?.id ?? null);
 
   async ngOnInit() {
-    try {
-      const summaries = await this.chatHistoryService.getAllConversations();
-      this.conversationSummaries.set(summaries);
-    } catch {
-      // Leave sidebar empty on error
-    }
+    this.conversations.set(await this.chatHistoryService.getAllConversations());
   }
 
-  onCollapseToggled() {
-    this.sidebarCollapsed.update(collapsed => !collapsed);
+  toggleSidebar() {
+    this.collapsed.update(value => !value);
   }
 
-  onNewChat() {
+  async selectConversation(id: string) {
+    const conversation = await this.chatHistoryService.getConversationById(id);
+    this.activeConversation.set(conversation);
+  }
+
+  newChat() {
     this.activeConversation.set(null);
   }
 
-  async onConversationSelected(convId: string) {
-    try {
-      const conversation = await this.chatHistoryService.getConversationById(convId);
-      this.activeConversation.set(conversation);
-    } catch {
-      // Keep current view on error
-    }
-  }
-
-  async onLogout() {
+  async logout() {
     await this.authService.logout();
   }
 
-  async onMessageSent(content: string) {
-    if (this.isLoading()) return;
+  async sendMessage(text: string) {
+    const trimmed = text.trim();
+    if (!trimmed) return;
 
     const userMessage: ChatMessage = {
       id: crypto.randomUUID(),
       role: 'user',
-      content,
-      timestamp: new Date(),
+      content: trimmed,
     };
 
-    const current = this.activeConversation();
+    this.isLoading.set(true);
 
-    if (current) {
-      this.activeConversation.set({ ...current, messages: [...current.messages, userMessage] });
-      this.isLoading.set(true);
-      try {
-        const response = await this.chatService.continueConversation(current.id, content);
-        const assistantMessage: ChatMessage = {
-          id: crypto.randomUUID(),
-          role: 'assistant',
-          content: response.message,
-          timestamp: new Date(),
-        };
-        this.activeConversation.update(conv =>
-          conv ? { ...conv, messages: [...conv.messages, assistantMessage] } : null
-        );
-      } catch {
-        // User message remains visible; user can retry
-      } finally {
-        this.isLoading.set(false);
+    try {
+      if (!this.activeConversation()) {
+        this.activeConversation.set({ id: '', title: trimmed.slice(0, 60), messages: [userMessage] });
+
+        const { conversationId, reply } = await this.conversationService.startConversation(trimmed);
+
+        this.activeConversation.update(conv => conv ? { ...conv, id: conversationId } : conv);
+        this.conversations.update(convs => [{ id: conversationId, title: trimmed.slice(0, 60) }, ...convs]);
+        this.addMessageToActive({ id: crypto.randomUUID(), role: 'assistant', content: reply });
+      } else {
+        this.addMessageToActive(userMessage);
+
+        const { reply } = await this.conversationService.continueConversation(this.activeConversation()!.id, trimmed);
+
+        this.addMessageToActive({ id: crypto.randomUUID(), role: 'assistant', content: reply });
       }
-    } else {
-      const tempId = crypto.randomUUID();
-      const tempConversation: Conversation = {
-        id: tempId,
-        title: content.length > 60 ? content.slice(0, 60) : content,
-        createdAt: new Date(),
-        messages: [userMessage],
-      };
-      this.activeConversation.set(tempConversation);
-      this.isLoading.set(true);
-      try {
-        const response = await this.chatService.startConversation('angular-assistant', content);
-        const assistantMessage: ChatMessage = {
-          id: crypto.randomUUID(),
-          role: 'assistant',
-          content: response.message,
-          timestamp: new Date(),
-        };
-        const newConversation: Conversation = {
-          ...tempConversation,
-          id: response.conversationId,
-          messages: [...tempConversation.messages, assistantMessage],
-        };
-        const summary: ConversationSummary = {
-          id: newConversation.id,
-          title: newConversation.title,
-          createdAt: newConversation.createdAt,
-        };
-        this.conversationSummaries.update(summaries => [summary, ...summaries]);
-        this.activeConversation.set(newConversation);
-        this.sidebarCollapsed.set(false);
-      } catch {
-        this.activeConversation.set(null);
-      } finally {
-        this.isLoading.set(false);
-      }
+    } catch (error) {
+      console.error('Failed to send message', error);
+    } finally {
+      this.isLoading.set(false);
     }
+  }
+
+  private addMessageToActive(message: ChatMessage) {
+    this.activeConversation.update(conv =>
+      conv ? { ...conv, messages: [...conv.messages, message] } : conv
+    );
   }
 }

@@ -1,23 +1,35 @@
-import { Request, Response, NextFunction } from 'express';
-import { verifyJwt } from '../utils/jwt';
-import { logger } from '../logger';
+import { NextFunction, Request, Response } from 'express';
+import jwt from 'jsonwebtoken';
+
+type JwtPayload = {
+  userId: string;
+  email: string;
+};
 
 export function requireAuth(req: Request, res: Response, next: NextFunction) {
   const authHeader = req.headers['authorization'];
-  const token = authHeader?.startsWith('Bearer ') ? authHeader.slice(7) : null;
 
-  if (!token) {
-    logger.warn({ path: req.path, method: req.method }, 'Request missing auth token');
-    res.status(401).json({ message: 'Missing authentication token.' });
+  if (!authHeader?.startsWith('Bearer ')) {
+    req.log.warn('Request missing Authorization Bearer token');
+    res.status(401).json({ error: 'Authentication required' });
+    return;
+  }
+
+  const token = authHeader.slice(7);
+  const jwtSecret = process.env['JWT_SECRET'];
+
+  if (!jwtSecret) {
+    req.log.error('JWT_SECRET environment variable is not set');
+    res.status(500).json({ error: 'Server configuration error' });
     return;
   }
 
   try {
-    verifyJwt(token);
-    logger.debug({ path: req.path, method: req.method }, 'Auth token verified');
+    const payload = jwt.verify(token, jwtSecret, { algorithms: ['HS256'] }) as JwtPayload;
+    req.userId = payload.userId;
     next();
-  } catch {
-    logger.warn({ path: req.path, method: req.method }, 'Invalid or expired token');
-    res.status(401).json({ message: 'Invalid or expired token.' });
+  } catch (error) {
+    req.log.warn({ error }, 'Invalid or expired JWT');
+    res.status(401).json({ error: 'Invalid or expired token' });
   }
 }

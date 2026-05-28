@@ -1,52 +1,46 @@
 import { Component, inject, signal } from '@angular/core';
-import { email, form, FormField, required, validate } from '@angular/forms/signals';
-import { passwordsMatch } from '../../shared/validators/passwords-match.validator';
-import { Router, RouterLink } from '@angular/router';
-import { NgOptimizedImage } from '@angular/common';
-import { HttpErrorResponse } from '@angular/common/http';
-import { AuthService } from '../auth.service';
-import { UserProfileService } from '../user-profile.service';
-import { LoadingIndicator } from '../../shared/components/loading-indicator/loading-indicator';
-import { UserMessageService } from '../../shared/components/user-message/user-message.service';
-import { SignUpData } from './sign-up.model';
+import { RouterLink } from '@angular/router';
+import { email, form, FormField, FormRoot, minLength, required } from '@angular/forms/signals';
+import { passwordsMatch } from '../passwords-match.validator';
+import { AuthService } from '../../shared/auth/auth.service';
 
 @Component({
   selector: 'sign-up',
-  imports: [RouterLink, NgOptimizedImage, FormField, LoadingIndicator],
+  imports: [RouterLink, FormField, FormRoot],
   templateUrl: './sign-up.html',
-  styleUrls: ['../auth-shared.scss', './sign-up.scss'],
+  styleUrl: './sign-up.scss',
 })
 export class SignUp {
   private readonly authService = inject(AuthService);
-  private readonly userProfile = inject(UserProfileService);
-  private readonly router = inject(Router);
-  private readonly userMessage = inject(UserMessageService);
 
-  protected readonly model = signal<SignUpData>({ email: '', password: '', confirmPassword: '' });
-  protected readonly loading = signal(false);
+  readonly showPassword = signal(false);
+  readonly showConfirmPassword = signal(false);
 
-  protected readonly form = form(this.model, (p) => {
-    required(p.email, { message: 'Email is required' });
-    email(p.email, { message: 'Enter a valid email address' });
-    required(p.password, { message: 'Password is required' });
-    required(p.confirmPassword, { message: 'Please confirm your password.' });
-    validate(p.confirmPassword, passwordsMatch(p.password));
+  readonly signUpModel = signal({ email: '', password: '', confirmPassword: '' });
+
+  readonly signUpForm = form(this.signUpModel, (fieldPath) => {
+    required(fieldPath.email, { message: 'Email is required' });
+    email(fieldPath.email, { message: 'Enter a valid email address' });
+    required(fieldPath.password, { message: 'Password is required' });
+    minLength(fieldPath.password, 8, { message: 'Password must be at least 8 characters' });
+    required(fieldPath.confirmPassword, { message: 'Please confirm your password' });
+    passwordsMatch(fieldPath.confirmPassword, fieldPath.password, { message: 'Passwords do not match' });
+  }, {
+    submission: {
+      action: async () => {
+        await this.authService.createUser(
+          this.signUpForm.email().value(),
+          this.signUpForm.password().value(),
+        );
+      },
+    },
   });
 
-  protected async onSubmit(event: Event) {
-    event.preventDefault();
-    this.loading.set(true);
-    this.userMessage.clear();
+  togglePassword() {
+    this.showPassword.update(visible => !visible);
+  }
 
-    try {
-      const response = await this.authService.signUp(this.model().email, this.model().password);
-      this.userProfile.saveSession(response.token, response.user);
-      this.router.navigate(['/home']);
-    } catch (err: unknown) {
-      const httpErr = err as HttpErrorResponse;
-      this.userMessage.show(httpErr.error?.message ?? 'Something went wrong. Please try again.');
-    } finally {
-      this.loading.set(false);
-    }
+  toggleConfirmPassword() {
+    this.showConfirmPassword.update(visible => !visible);
   }
 }

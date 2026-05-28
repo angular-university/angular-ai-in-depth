@@ -1,49 +1,37 @@
 import { Component, inject, signal } from '@angular/core';
-import { email, form, FormField, required } from '@angular/forms/signals';
-import { Router, RouterLink } from '@angular/router';
-import { NgOptimizedImage } from '@angular/common';
-import { HttpErrorResponse } from '@angular/common/http';
-import { AuthService } from '../auth.service';
-import { UserProfileService } from '../user-profile.service';
-import { LoadingIndicator } from '../../shared/components/loading-indicator/loading-indicator';
-import { UserMessageService } from '../../shared/components/user-message/user-message.service';
-import { SignInData } from './sign-in.model';
+import { RouterLink } from '@angular/router';
+import { email, form, FormField, FormRoot, required } from '@angular/forms/signals';
+import { AuthService } from '../../shared/auth/auth.service';
 
 @Component({
   selector: 'sign-in',
-  imports: [RouterLink, NgOptimizedImage, FormField, LoadingIndicator],
+  imports: [RouterLink, FormField, FormRoot],
   templateUrl: './sign-in.html',
-  styleUrls: ['../auth-shared.scss', './sign-in.scss'],
+  styleUrl: './sign-in.scss',
 })
 export class SignIn {
   private readonly authService = inject(AuthService);
-  private readonly userProfile = inject(UserProfileService);
-  private readonly router = inject(Router);
-  private readonly userMessage = inject(UserMessageService);
 
-  protected readonly model = signal<SignInData>({ email: '', password: '' });
-  protected readonly loading = signal(false);
+  readonly showPassword = signal(false);
 
-  protected readonly form = form(this.model, (p) => {
-    required(p.email, { message: 'Email is required' });
-    email(p.email, { message: 'Enter a valid email address' });
-    required(p.password, { message: 'Password is required' });
+  readonly loginModel = signal({ email: '', password: '' });
+
+  readonly loginForm = form(this.loginModel, (fieldPath) => {
+    required(fieldPath.email, { message: 'Email is required' });
+    email(fieldPath.email, { message: 'Enter a valid email address' });
+    required(fieldPath.password, { message: 'Password is required' });
+  }, {
+    submission: {
+      action: async () => {
+        await this.authService.signIn(
+          this.loginForm.email().value(),
+          this.loginForm.password().value(),
+        );
+      },
+    },
   });
 
-  protected async onSubmit(event: Event) {
-    event.preventDefault();
-    this.loading.set(true);
-    this.userMessage.clear();
-
-    try {
-      const response = await this.authService.signIn(this.model().email, this.model().password);
-      this.userProfile.saveSession(response.token, response.user);
-      this.router.navigate(['/home']);
-    } catch (err: unknown) {
-      const httpErr = err as HttpErrorResponse;
-      this.userMessage.show(httpErr.error?.message ?? 'Something went wrong. Please try again.');
-    } finally {
-      this.loading.set(false);
-    }
+  togglePassword() {
+    this.showPassword.update(visible => !visible);
   }
 }

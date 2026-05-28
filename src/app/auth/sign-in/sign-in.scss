@@ -1,1 +1,6 @@
-// Sign-in specific overrides (shared styles live in auth-shared.scss)
+@use '../auth-layout';
+
+:host {
+  display: block;
+  height: 100%;
+}

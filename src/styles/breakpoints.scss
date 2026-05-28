@@ -1,0 +1,33 @@
+// Breakpoint values
+$mobile-max: 767px;
+$tablet-min: 768px;
+$tablet-max: 1023px;
+$desktop-min: 1024px;
+
+// Up to and including phones
+@mixin mobile {
+  @media (max-width: $mobile-max) {
+    @content;
+  }
+}
+
+// Tablets only
+@mixin tablet {
+  @media (min-width: $tablet-min) and (max-width: $tablet-max) {
+    @content;
+  }
+}
+
+// Tablets and above
+@mixin tablet-up {
+  @media (min-width: $tablet-min) {
+    @content;
+  }
+}
+
+// Desktop and above
+@mixin desktop {
+  @media (min-width: $desktop-min) {
+    @content;
+  }
+}

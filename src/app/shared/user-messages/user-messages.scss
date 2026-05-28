@@ -1,0 +1,64 @@
+.messages-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 9999;
+}
+
+.message-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.875rem 1.5rem;
+  font-size: 0.9375rem;
+  font-weight: 500;
+  gap: 1rem;
+
+  &--error {
+    background: #b91c1c;
+    color: white;
+  }
+
+  &--warning {
+    background: #d97706;
+    color: white;
+  }
+
+  &--info {
+    background: #1d4ed8;
+    color: white;
+  }
+
+  &--success {
+    background: #15803d;
+    color: white;
+  }
+}
+
+.message-text {
+  flex: 1;
+}
+
+.dismiss-btn {
+  flex-shrink: 0;
+  background: none;
+  border: none;
+  color: inherit;
+  cursor: pointer;
+  padding: 0.25rem;
+  display: flex;
+  align-items: center;
+  opacity: 0.8;
+  border-radius: 4px;
+
+  &:hover {
+    opacity: 1;
+    background: rgba(255, 255, 255, 0.15);
+  }
+
+  svg {
+    width: 18px;
+    height: 18px;
+  }
+}

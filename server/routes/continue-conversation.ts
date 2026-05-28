@@ -1,70 +1,57 @@
 import { Request, Response } from 'express';
-import { logger } from '../logger';
-import { conversationsDb, AiMessage } from '../conversations-db';
-import { getSystemPrompt } from '../prompts';
-import { getAiCompletion } from '../utils/ai';
+import {appendMessages, DB_CONVERSATIONS} from '../db-data';
+import { SYSTEM_PROMPTS } from '../prompts';
+import { sendMessages } from '../ai-client';
+import { ContinueConversationRequest } from '../models/continue-conversation-request.model.js';
+import { ContinueConversationResponse } from '../models/continue-conversation-response.model.js';
 
 export async function continueConversation(req: Request, res: Response) {
-  const { conversationId, message } = req.body ?? {};
+  const { conversationId, message } = req.body as ContinueConversationRequest;
 
   if (!conversationId || typeof conversationId !== 'string') {
-    logger.warn({ body: req.body }, 'continue-conversation: missing conversationId');
-    res.status(400).json({ message: 'conversationId is required.' });
+    req.log.warn('Continue conversation request missing conversationId');
+    res.status(400).json({ error: 'Missing required field: conversationId' });
     return;
   }
 
-  if (!message || typeof message !== 'string' || message.trim().length === 0) {
-    logger.warn({ conversationId }, 'continue-conversation: missing or empty message');
-    res.status(400).json({ message: 'message is required.' });
+  if (!message || typeof message !== 'string') {
+    req.log.warn({ conversationId }, 'Continue conversation request missing message');
+    res.status(400).json({ error: 'Missing required field: message' });
     return;
   }
 
-  const conversation = conversationsDb.get(conversationId);
+  const conversation = DB_CONVERSATIONS.find(c => c.id === conversationId && c.userId === req.userId);
 
   if (!conversation) {
-    logger.warn({ conversationId }, 'continue-conversation: conversation not found');
-    res.status(404).json({ message: 'Conversation not found.' });
+    req.log.warn({ conversationId }, 'Conversation not found');
+    res.status(404).json({ error: 'Conversation not found' });
     return;
   }
 
-  const systemPrompt = getSystemPrompt(conversation.promptId);
+  const systemPrompt = SYSTEM_PROMPTS[conversation.promptId];
 
   if (!systemPrompt) {
-    logger.error({ conversationId, promptId: conversation.promptId }, 'continue-conversation: prompt no longer available');
-    res.status(500).json({ message: 'Conversation prompt is no longer available.' });
+    req.log.error({ conversationId, promptId: conversation.promptId }, 'System prompt not found for conversation');
+    res.status(500).json({ error: 'System prompt configuration error' });
     return;
   }
 
-  const userMessage = message.trim();
-
-  const messagesForAi: AiMessage[] = [
-    { role: 'system', content: systemPrompt },
-    ...conversation.messages,
-    { role: 'user', content: userMessage },
-  ];
-
-  logger.info({ conversationId, messageCount: messagesForAi.length }, 'Requesting AI completion to continue conversation');
-
-  let assistantContent: string;
+  req.log.info({ conversationId, existingMessages: conversation.messages.length }, 'Continuing conversation');
 
   try {
-    assistantContent = await getAiCompletion(messagesForAi);
-  } catch (err) {
-    logger.error({ err, conversationId }, 'Failed to get AI completion');
-    res.status(502).json({ message: 'Could not reach AI service. Please try again.' });
-    return;
+    const reply = await sendMessages([
+      { role: 'system', content: systemPrompt },
+      ...conversation.messages.map(({ role, content }) => ({ role, content })),
+      { role: 'user', content: message },
+    ]);
+
+    appendMessages(conversationId, message, reply);
+    req.log.info({ conversationId }, 'Conversation updated successfully');
+
+    const responseBody: ContinueConversationResponse = { reply };
+    res.json(responseBody);
+  } catch (error) {
+    req.log.error({ error, conversationId }, 'Failed to get AI response while continuing conversation');
+    res.status(502).json({ error: 'Failed to get a response from the AI service' });
   }
-
-  conversationsDb.set(conversationId, {
-    ...conversation,
-    messages: [
-      ...conversation.messages,
-      { role: 'user', content: userMessage },
-      { role: 'assistant', content: assistantContent },
-    ],
-  });
-
-  logger.info({ conversationId }, 'Conversation continued and saved');
-
-  res.json({ message: assistantContent });
 }
