@@ -3,13 +3,13 @@
 
 This repository contains the code of the [Angular AI In Depth (with Cursor and Claude Code)](https://angular-university.io/course/angular-ai-in-depth) course.
 
-This course repository is updated to Angular v21.
+This course repository is updated to Angular v22.
 
 ![Angular AI In Depth (with Cursor and Claude Code)](https://d3vigmphadbn9b.cloudfront.net/course-images/large-images/angular-ai-in-depth.jpg)
 
 # Installation pre-requisites
 
-Please install Node 22 Long Term Support Edition (LTE).
+Please install Node 24 Long Term Support Edition (LTE).
 
 # Installing the Angular CLI
 
