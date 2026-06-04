@@ -10,7 +10,6 @@ This course repository is updated to Angular v22.
 # Installation pre-requisites
 
 Please install Node 24 Long Term Support Edition (LTE).
-
 # Installing the Angular CLI
 
 With the following command the angular-cli will be installed globally in your machine:
